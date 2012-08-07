@@ -1,5 +1,5 @@
-# Inherit device configuration for tf300t.
-$(call inherit-product, device/asus/tf300t/full_tf300t.mk)
+# Inherit device configuration for tf700t.
+$(call inherit-product, device/asus/tf700t/full_tf700t.mk)
 
 # Inherit some common cyanogenmod stuff.
 $(call inherit-product, vendor/cm/config/common_full_tablet_wifionly.mk)
