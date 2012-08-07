@@ -1,0 +1,4 @@
+#
+# system.prop for tf300
+#
+ro.carrier=wifi-only
