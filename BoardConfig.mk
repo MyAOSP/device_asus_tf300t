@@ -88,7 +88,7 @@ TARGET_KERNEL_SOURCE := kernel/asus/tf700t
 TARGET_KERNEL_CONFIG := tf700t_cm10_defconfig
 
 # Prebuilt Kernel Fallback
-#TARGET_PREBUILT_KERNEL := device/asus/tf300t/kernel
+#TARGET_PREBUILT_KERNEL := device/asus/tf700t/kernel
 
 # Custom Tools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf700t/releasetools/tf700t_ota_from_target_files
