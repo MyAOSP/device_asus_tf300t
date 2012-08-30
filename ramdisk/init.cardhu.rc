@@ -4,6 +4,9 @@ import init.cardhu.cpu.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
 
+#temp hack to start surfaceflinger
+    /system/bin/surfaceflinger-start.sh
+
 # for backwards compatibility
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
