@@ -67,13 +67,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4330.hcd:system/etc/firmware/bcm4330.hcd \
     $(LOCAL_PATH)/prebuilt/firmware/fw_bcm4329_apsta.bin:system/vendor/firmware/fw_bcm4329_apsta.bin \
     $(LOCAL_PATH)/prebuilt/firmware/fw_bcm4329.bin:system/vendor/firmware/fw_bcm4329.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd.bin:system/vendor/firmware/bcm4330/fw_bcmdhd.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd_b1.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_b1.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd_apsta.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_apsta.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd_p2p.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmhd.bin:system/vendor/firmware/bcm4329/fw_bcmdhd.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmhd_apsta.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin 
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd.bin:system/vendor/firmware/bcm4330/fw_bcmdhd.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_b1.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_b1.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_apsta.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_apsta.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd.bin:system/vendor/firmware/bcm4329/fw_bcmdhd.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_apsta.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin 
 
 
 
