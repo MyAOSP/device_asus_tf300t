@@ -45,7 +45,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/bin/touch_fw_update:system/bin/touch_fw_update \
     $(LOCAL_PATH)/prebuilt/gpsconfig.xml:system/etc/gps/gpsconfig.xml
 
-# Input device configeration files
+# Input device configuration files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/idc/atmel-maxtouch.idc:system/usr/idc/atmel-maxtouch.idc \
     $(LOCAL_PATH)/idc/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc \
@@ -58,7 +58,24 @@ PRODUCT_COPY_FILES += \
 # Camera/WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/nvram.txt:system/etc/nvram_4329.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0863.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd 
+    $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0863.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0879.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0879.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0379.0390.hcd:system/etc/firmware/BCM4330B1_002.001.003.0379.0390.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0609.0636.hcd:system/etc/firmware/BCM4330B1_002.001.003.0609.0636.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0750.0820.hcd:system/etc/firmware/BCM4330B1_002.001.003.0750.0820.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330.hcd:system/etc/firmware/bcm4330.hcd \
+    $(LOCAL_PATH)/prebuilt/firmware/fw_bcm4329_apsta.bin:system/vendor/firmware/fw_bcm4329_apsta.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/fw_bcm4329.bin:system/vendor/firmware/fw_bcm4329.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd.bin:system/vendor/firmware/bcm4330/fw_bcmdhd.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd_b1.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_b1.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd_apsta.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_apsta.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmhd_p2p.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmhd.bin:system/vendor/firmware/bcm4329/fw_bcmdhd.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmhd_apsta.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin \
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin 
+
+
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -129,7 +146,7 @@ $(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
 $(call inherit-product-if-exists, vendor/asus/tf700t/tf700t-vendor.mk)
 
 # Copy bcm4329 firmware
-$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+#$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
 # Device naming
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
