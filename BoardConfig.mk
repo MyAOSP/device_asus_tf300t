@@ -96,7 +96,7 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Try to build the kernel
 TARGET_KERNEL_SOURCE := kernel/asus/tf700t
-TARGET_KERNEL_CONFIG := tf700t_cm10_defconfig
+TARGET_KERNEL_CONFIG := tf700t_bjr_defconfig
 
 # Prebuilt Kernel Fallback
 #TARGET_PREBUILT_KERNEL := device/asus/tf700t/kernel
