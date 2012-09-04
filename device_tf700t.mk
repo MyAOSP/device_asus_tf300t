@@ -55,9 +55,22 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/prebuilt/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl
 
+nvram_4330.txt
+nvram_murata.txt
+nvram_nh615.txt
+nvram_nh660.txt
+nvram_nh665.txt
+nvram_nh669.txt
+
 # Camera/WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/nvram.txt:system/etc/nvram_4329.txt \
+    $(LOCAL_PATH)/prebuilt/firmware/nvram_4330.txt:system/etc/nvram_4330.txt \
+    $(LOCAL_PATH)/prebuilt/firmware/nvram_murata.txt:system/etc/nvram_murata.txt \
+    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh615.txt:system/etc/nvram_nh615.txt \
+    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh660.txt:system/etc/nvram_nh660.txt \
+    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh665.txt:system/etc/nvram_nh665.txt \
+    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh669.txt:system/etc/nvram_nh669.txt \
     $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0863.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd \
     $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0879.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0879.hcd \
     $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0379.0390.hcd:system/etc/firmware/BCM4330B1_002.001.003.0379.0390.hcd \
