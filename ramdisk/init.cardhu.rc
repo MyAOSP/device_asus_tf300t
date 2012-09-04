@@ -249,11 +249,18 @@ service bugreport /system/bin/dumpstate -d -v -o /data/storage/bugreports/bugrep
 
 #BCM
 service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0,0,0,0,0,0 \
-    --baudrate 3000000 --patchram /etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd --enable_lpm /dev/ttyHS2
+    --baudrate 3000000 --patchram /etc/firmware/BCM4330B1_002.001.003.0379.0390.hcd --enable_lpm /dev/ttyHS2
     class main
     user root
     group system bluetooth net_bt_admin misc
     disabled
+
+#BCM firmware list
+##BCM4329B1_002.002.023.0797.0863.hcd --nowork
+##BCM4329B1_002.002.023.0797.0879.hcd --nowork
+##BCM4330B1_002.001.003.0379.0390.hcd
+##BCM4330B1_002.001.003.0609.0636.hcd
+##BCM4330B1_002.001.003.0750.0820.hcd
 
 # Start GPS daemon
   on boot
