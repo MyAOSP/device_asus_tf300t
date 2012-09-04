@@ -55,13 +55,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/prebuilt/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl
 
-nvram_4330.txt
-nvram_murata.txt
-nvram_nh615.txt
-nvram_nh660.txt
-nvram_nh665.txt
-nvram_nh669.txt
-
 # Camera/WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/nvram.txt:system/etc/nvram_4329.txt \
