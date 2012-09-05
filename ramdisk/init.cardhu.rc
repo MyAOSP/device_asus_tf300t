@@ -249,7 +249,7 @@ service bugreport /system/bin/dumpstate -d -v -o /data/storage/bugreports/bugrep
 
 #BCM
 service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0,0,0,0,0,0 \
-    --baudrate 3000000 --patchram /etc/firmware/BCM4330B1_002.001.003.0379.0390.hcd --enable_lpm /dev/ttyHS2
+    --baudrate 3000000 --use_baudrate_for_download --patchramdir /etc/firmware --enable_lpm --tosleep=50000 /dev/ttyHS2
     class main
     user root
     group system bluetooth net_bt_admin misc
