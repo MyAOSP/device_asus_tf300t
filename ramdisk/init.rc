@@ -432,8 +432,6 @@ service surfaceflinger /system/bin/surfaceflinger
     group graphics
     onrestart restart zygote
 
-exec /system/bin/surfaceflinger &
-
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
     class main
     socket zygote stream 660 root system
@@ -453,7 +451,7 @@ service media /system/bin/mediaserver
     group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc
     ioprio rt 4
 
-exec /system/bin/surfaceflinger &
+##exec /system/bin/surfaceflinger &
 
 service bootanim /system/bin/bootanimation
     class main
