@@ -336,7 +336,7 @@ on boot
 
 # bjr changes
 # Set this property so surfaceflinger is not started by system_init
-    setprop system_init.startsurfaceflinger 1
+    setprop system_init.startsurfaceflinger 0 
 
 # Run sysinit
     exec /system/bin/sysinit
@@ -432,6 +432,8 @@ service surfaceflinger /system/bin/surfaceflinger
     group graphics
     onrestart restart zygote
 
+exec /system/bin/surfaceflinger &
+
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
     class main
     socket zygote stream 660 root system
@@ -450,6 +452,8 @@ service media /system/bin/mediaserver
     user media
     group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc
     ioprio rt 4
+
+exec /system/bin/surfaceflinger &
 
 service bootanim /system/bin/bootanimation
     class main
