@@ -426,7 +426,7 @@ service ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc qcom_diag log
 
-service surfaceflinger /system/bin/surfaceflinger
+service SurfaceFlinger /system/bin/surfaceflinger
     class main
     user system
     group graphics
