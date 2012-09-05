@@ -42,6 +42,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/gpsconfig.xml:system/etc/gps/gpsconfig.xml
 
 # Prebuilt binaires
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/cpu.sh:system/bin/cpu.sh \
     $(LOCAL_PATH)/prebuilt/bin/rild:system/bin/rild \
     $(LOCAL_PATH)/prebuilt/surfaceflinger-start.sh:system/bin/surfaceflinger-start.sh \
     $(LOCAL_PATH)/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \
