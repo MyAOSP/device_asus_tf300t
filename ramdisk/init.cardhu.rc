@@ -255,18 +255,11 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
     group system bluetooth net_bt_admin misc
     disabled
 
-#BCM firmware list
-##BCM4329B1_002.002.023.0797.0863.hcd --nowork
-##BCM4329B1_002.002.023.0797.0879.hcd --nowork
-##BCM4330B1_002.001.003.0379.0390.hcd
-##BCM4330B1_002.001.003.0609.0636.hcd
-##BCM4330B1_002.001.003.0750.0820.hcd
-
 # Start GPS daemon
   on boot
   service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
-  user gps
-  group system
+  user root
+  group root
   class late_start
 
 
