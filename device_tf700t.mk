@@ -45,7 +45,6 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt binaires
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/cpu.sh:system/bin/cpu.sh \
     $(LOCAL_PATH)/prebuilt/bin/rild:system/bin/rild \
     $(LOCAL_PATH)/prebuilt/surfaceflinger-start.sh:system/bin/surfaceflinger-start.sh \
     $(LOCAL_PATH)/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \
@@ -87,7 +86,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd.bin:system/vendor/firmware/bcm4329/fw_bcmdhd.bin \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_apsta.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin 
-
 
 
 # These are the hardware-specific features

@@ -7,7 +7,7 @@ on early-init
 # for backwards compatibility
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
-    mkdir /storage 0050 system sdcard_r
+    mkdir /storage 0550 system sdcard_r
     mkdir /storage/sdcard0 0000 system system
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
@@ -62,6 +62,9 @@ on boot
     setprop ro.nfc.port "I2C"
     chmod 0660 /dev/pn544
     chown nfc nfc /dev/pn544
+
+# nvdps
+    chown system system /sys/class/graphics/fb0/device/nvdps
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
@@ -296,8 +299,8 @@ on property:tf.enable=y
     start tf_daemon
 
 #insmod bcmdhd driver for BCM4330
-on property:wifi.module.type=0
-    insmod /system/lib/modules/bcmdhd.ko
+#on property:wifi.module.type=0
+#    insmod /system/lib/modules/bcmdhd.ko
 
 # stop ril-daemon if this is a wifi-only device
 on property:ro.carrier=wifi-only

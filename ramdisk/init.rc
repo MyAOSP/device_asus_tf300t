@@ -334,12 +334,9 @@ on boot
     write /sys/kernel/mm/ksm/sleep_millisecs 1500
     write /sys/kernel/mm/ksm/pages_to_scan 256
 
-# bjr changes
-# Set this property so surfaceflinger is not started by system_init
-    setprop system_init.startsurfaceflinger 0 
 
-# Run sysinit
-    exec /system/bin/sysinit
+# Set this property so surfaceflinger is not started by system_init
+    setprop system_init.startsurfaceflinger 0
 
     class_start core
     class_start main
@@ -426,7 +423,7 @@ service ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio sdcard_r sdcard_rw qcom_oncrpc qcom_diag log
 
-service SurfaceFlinger /system/bin/surfaceflinger
+service surfaceflinger /system/bin/surfaceflinger
     class main
     user system
     group graphics
@@ -450,8 +447,6 @@ service media /system/bin/mediaserver
     user media
     group audio camera inet net_bt net_bt_admin net_bw_acct drmrpc
     ioprio rt 4
-
-##exec /system/bin/surfaceflinger &
 
 service bootanim /system/bin/bootanimation
     class main
