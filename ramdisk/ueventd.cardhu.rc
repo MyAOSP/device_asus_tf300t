@@ -57,3 +57,6 @@
 /dev/touchpanel 0660     system  system 
 /dev/elan-iap   0660     system  system
 /dev/rfkill     0660    wifi    wifi
+/dev/hdcp0	0000    system  system
+/dev/hdcp1	0000    system  system
+
