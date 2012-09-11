@@ -86,14 +86,14 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/pwr_cap_limit_4
 
 # Sensor
-    chmod 666 /dev/nvhost-ctrl
-    chmod 666 /dev/nvhost-display
-    chmod 666 /dev/nvhost-dsi
-    chmod 666 /dev/nvhost-gr2d
-    chmod 666 /dev/nvhost-gr3d
-    chmod 666 /dev/nvhost-isp
-    chmod 666 /dev/nvhost-mpe
-    chmod 666 /dev/nvhost-vi
+    chmod 777 /dev/nvhost-ctrl
+    chmod 777 /dev/nvhost-display
+    chmod 777 /dev/nvhost-dsi
+    chmod 777 /dev/nvhost-gr2d
+    chmod 777 /dev/nvhost-gr3d
+    chmod 777 /dev/nvhost-isp
+    chmod 777 /dev/nvhost-mpe
+    chmod 777 /dev/nvhost-vi
     chown system system /sys/bus/iio/devices/device0/als_ir_mode
     chown system system /sys/bus/iio/devices/device0/proximity_enable
 
@@ -120,9 +120,9 @@ on boot
     setprop sys.dockkeys.change 0
 
 # Touchscreen Config-UI interface
-   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
-   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
-   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
+   chmod 777 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
+   chmod 777 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
+   chmod 777 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
 
 #Fuse
     chmod 444 /sys/firmware/fuse/odm_production_mode
@@ -145,7 +145,7 @@ on boot
     chown gps system /data/gps
     chmod 770 /data/gps
     chown gps system /dev/ttyHS1
-    chmod 0660 /dev/ttyHS1
+    chmod 0777 /dev/ttyHS1
 
 # NTFS and exFAT support
     insmod /sbin/tntfs.ko
