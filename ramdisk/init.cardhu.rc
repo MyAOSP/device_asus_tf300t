@@ -64,7 +64,7 @@ on boot
     chown nfc nfc /dev/pn544
 
 # nvdps
-    chown -R system system /sys/class/graphics
+    chown system system /sys/class/graphics
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
@@ -120,9 +120,9 @@ on boot
     setprop sys.dockkeys.change 0
 
 # Touchscreen Config-UI interface
-   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
-   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
-   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
+   chmod 777 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
+   chmod 777 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
+   chmod 777 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
 
 #Fuse
     chmod 444 /sys/firmware/fuse/odm_production_mode
@@ -143,9 +143,9 @@ on boot
     chmod 0664 /sys/class/gpio/gpio162/value
     mkdir /data/gps
     chown gps system /data/gps
-    chmod 770 /data/gps
+    chmod 0770 /data/gps
     chown gps system /dev/ttyHS1
-    chmod 0660 /dev/ttyHS1
+    chmod 0777 /dev/ttyHS1
 
 # NTFS and exFAT support
     insmod /sbin/tntfs.ko
