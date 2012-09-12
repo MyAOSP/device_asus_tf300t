@@ -51,14 +51,3 @@
 /dev/hdcp0	0777    system  system
 /dev/hdcp1	0777    system  system
 
-/dev/nvhost-ctrl	0777	root	root
-/dev/nvhost-display	0777	root	root
-/dev/nvhost-dsi		0777	root	root
-/dev/nvhost-gr2d	0777	root	root
-/dev/nvhost-gr3d	0777	root	root
-/dev/nvhost-isp		0777	root	root
-/dev/nvhost-mpe		0777	root	root
-/dev/nvhost-vi		0777	root	root
-/dev/nvhdcp0		0777	system	system
-/dev/nvhdcp1		0777	system	system
-
