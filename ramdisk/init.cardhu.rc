@@ -64,7 +64,7 @@ on boot
     chown nfc nfc /dev/pn544
 
 # nvdps
-    chown system system /sys/class/graphics
+    chown -R system system /sys/class/graphics
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
@@ -143,7 +143,7 @@ on boot
     chmod 0664 /sys/class/gpio/gpio162/value
     mkdir /data/gps
     chown gps system /data/gps
-    chmod 0770 /data/gps
+    chmod 770 /data/gps
     chown gps system /dev/ttyHS1
     chmod 0777 /dev/ttyHS1
 
