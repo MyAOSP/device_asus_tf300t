@@ -4,16 +4,18 @@
 /dev/block/mmcblk0p3    0777    root    system
 /dev/block/mmcblk0p4    0777    root    system
 /dev/block/mmcblk0p6    0777    drm     drm
+/dev/tegra_dc*	0777	system	system
 
 /dev/tegra_avp	0777	media	media
 /dev/tegra_avpchannel	0777	media	media
 /dev/tegra_rpc	0777	media	media
 /dev/tegra_sema	0777	media	media
 /dev/tegra_mediaserver	0777 	media 	media
-/dev/tegra_dc*	0777	system	system
 /dev/tegra_camera 0777	media	camera
 /dev/hdcp0	0777    system  system
 /dev/hdcp1	0777    system  system
+/dev/nvhdcp0    0777    system  system
+/dev/nvhdcp1    0777    system  system
 
 /dev/ov5650	0777	media	camera
 /dev/ov2710	0777	media	camera
