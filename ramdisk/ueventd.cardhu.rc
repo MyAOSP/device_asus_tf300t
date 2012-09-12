@@ -1,10 +1,10 @@
-/dev/knvmap	0777	system	system
-/dev/nvmap	0777	system	system
-/dev/tf_driver	0777	system	system
-/dev/block/mmcblk0p3    0777    root    system
-/dev/block/mmcblk0p4    0777    root    system
-/dev/block/mmcblk0p6    0777    drm     drm
-/dev/tegra_dc*	0777	system	system
+/dev/knvmap	0660	system	system
+/dev/nvmap	0666	system	system
+/dev/tf_driver	0666	system	system
+/dev/block/mmcblk0p3    0660    root    system
+/dev/block/mmcblk0p4    0660    root    system
+/dev/block/mmcblk0p6    0600    drm     drm
+/dev/tegra_dc*	0660	system	system
 
 /dev/tegra_avp	0660	media	media
 /dev/tegra_avpchannel	0660	media	media
