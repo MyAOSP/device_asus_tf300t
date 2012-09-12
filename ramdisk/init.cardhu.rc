@@ -86,14 +86,14 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/pwr_cap_limit_4
 
 # Sensor
-    chmod 777 /dev/nvhost-ctrl
-    chmod 777 /dev/nvhost-display
-    chmod 777 /dev/nvhost-dsi
-    chmod 777 /dev/nvhost-gr2d
-    chmod 777 /dev/nvhost-gr3d
-    chmod 777 /dev/nvhost-isp
-    chmod 777 /dev/nvhost-mpe
-    chmod 777 /dev/nvhost-vi
+    chmod 666 /dev/nvhost-ctrl
+    chmod 666 /dev/nvhost-display
+    chmod 666 /dev/nvhost-dsi
+    chmod 666 /dev/nvhost-gr2d
+    chmod 666 /dev/nvhost-gr3d
+    chmod 666 /dev/nvhost-isp
+    chmod 666 /dev/nvhost-mpe
+    chmod 666 /dev/nvhost-vi
     chown system system /sys/bus/iio/devices/device0/als_ir_mode
     chown system system /sys/bus/iio/devices/device0/proximity_enable
 
