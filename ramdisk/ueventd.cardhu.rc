@@ -14,8 +14,6 @@
 /dev/tegra_camera 0777	media	camera
 /dev/hdcp0	0777    system  system
 /dev/hdcp1	0777    system  system
-/dev/nvhdcp0    0777    system  system
-/dev/nvhdcp1    0777    system  system
 
 /dev/ov5650	0777	media	camera
 /dev/ov2710	0777	media	camera
