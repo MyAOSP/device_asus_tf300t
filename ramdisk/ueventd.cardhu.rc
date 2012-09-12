@@ -3,7 +3,6 @@
 /dev/tegra_avp	0777	media	media
 /dev/tegra_avpchannel	0777	media	media
 /dev/tegra_rpc	0777	media	media
-/dev/tegra_avpchannel	0777	media	media
 /dev/tegra_sema	0777	media	media
 /dev/tegra_mediaserver	0777 	media 	media
 /dev/ov5650	0777	media	camera
