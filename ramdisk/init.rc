@@ -194,13 +194,13 @@ on post-fs-data
     mkdir /data/radio 0770 radio radio
 
     # create dalvik-cache and double-check the perms, so as to enforce our permissions
-    mkdir /data/dalvik-cache 0771 system system
+    mkdir /data/dalvik-cache 0777 system system
     chown system system /data/dalvik-cache
-    chmod 0771 /data/dalvik-cache
+    chmod 0777 /data/dalvik-cache
 
-    mkdir /cache/dalvik-cache 0771 system system
+    mkdir /cache/dalvik-cache 0777 system system
     chown system system /cache/dalvik-cache
-    chmod 0771 /cache/dalvik-cache
+    chmod 0777 /cache/dalvik-cache
 
     # create resource-cache and double-check the perms
     mkdir /data/resource-cache 0771 system system
