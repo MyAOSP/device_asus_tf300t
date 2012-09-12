@@ -50,7 +50,7 @@ loglevel 3
 
     mkdir /system
     mkdir /data 0771 system system
-    mkdir /cache 0770 system system
+    mkdir /cache 0777 system cache
     mkdir /config 0500 root root
 
     # Directory for putting things only root should see.
@@ -128,11 +128,11 @@ on post-fs
 
     # We chown/chmod /cache again so because mount is run as root + defaults
     chown system cache /cache
-    chmod 0770 /cache
+    chmod 0777 /cache
 
     # This may have been created by the recovery system with odd permissions
     chown system cache /cache/recovery
-    chmod 0770 /cache/recovery
+    chmod 0777 /cache/recovery
 
     #change permissions on vmallocinfo so we can grab it from bugreports
     chown root log /proc/vmallocinfo
@@ -145,7 +145,7 @@ on post-fs
     chmod 0220 /proc/sysrq-trigger
 
     # create the lost+found directories, so as to enforce our permissions
-    mkdir /cache/lost+found 0770 root root
+    mkdir /cache/lost+found 0777 root root
 
 on post-fs-data
     # We chown/chmod /data again so because mount is run as root + defaults
@@ -195,11 +195,11 @@ on post-fs-data
 
     # create dalvik-cache and double-check the perms, so as to enforce our permissions
     mkdir /data/dalvik-cache 0777 system system
-    chown system system /data/dalvik-cache
+    chown system cache /data/dalvik-cache
     chmod 0777 /data/dalvik-cache
 
     mkdir /cache/dalvik-cache 0777 system system
-    chown system system /cache/dalvik-cache
+    chown system cache /cache/dalvik-cache
     chmod 0777 /cache/dalvik-cache
 
     # create resource-cache and double-check the perms
