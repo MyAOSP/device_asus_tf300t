@@ -3,3 +3,10 @@
 #
 ro.carrier=wifi-only
 ro.sf.lcd_density=240
+
+# Addidional info for Settings/About/Hardware
+ro.device.cpu=nVidia Tegra 3, Quad-core 1.7 GHz
+ro.device.gpu=GeForce 12core GPU
+ro.device.front_cam=2.0MP
+ro.device.rear_cam=8MP
+ro.device.screen_res=1920 x 1200 pixels, 10.1 IPS
