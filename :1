@@ -136,6 +136,18 @@ on boot
     write /data/misc/wminput/connected 0
     chmod 0666 /data/misc/wminput/connected
 
+# GPS init
+#    write /sys/class/gpio/export 162
+#    write /sys/class/gpio/gpio162/value 0
+#    write /sys/class/gpio/gpio162/direction out
+#    chown gps system /sys/class/gpio/gpio162/value
+#    chmod 0664 /sys/class/gpio/gpio162/value
+#    mkdir /data/gps
+#    chown gps system /data/gps
+#    chmod 770 /data/gps
+#    chown gps system /dev/ttyHS1
+#    chmod 0660 /dev/ttyHS1
+
 # GPS
     mkdir /data/gps
     chown system system /data/gps
