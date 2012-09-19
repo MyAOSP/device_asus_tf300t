@@ -70,10 +70,14 @@ on boot
     chown system system /sys/class/backlight/pwm-backlight/brightness
 
 # didim
-    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/enable
-    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/aggressiveness
-    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/phase_in_adjustments
-    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/bin_width
+	
+    chown system system /sys/class/graphics/fb0/device/smartdimmer/enable
+    chown system system /sys/class/graphics/fb0/device/smartdimmer/aggressiveness
+    chown system system /sys/class/graphics/fb0/device/smartdimmer/phase_in_adjustments
+    chown system system /sys/devices/tegradc.0/smartdimmer/enable
+    chown system system /sys/devices/tegradc.0/smartdimmer/aggressiveness
+    chown system system /sys/devices/tegradc.0/smartdimmer/phase_in_adjustments
+    chown system system /sys/devices/tegradc.0/smartdimmer/bin_width
 
 # power
     chown system system /sys/kernel/tegra_cap/core_cap_level
@@ -88,8 +92,8 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/pwr_cap_limit_4
 
 # Sensor
-    mkdir /data/sensors 0751 system system
-    mkdir /data/lightsensor 0751 system system
+    mkdir /data/sensors 0777 system system
+    mkdir /data/lightsensor 0777 system system
     chmod 666 /dev/nvhost-ctrl
     chmod 666 /dev/nvhost-display
     chmod 666 /dev/nvhost-dsi
@@ -117,6 +121,10 @@ on boot
     write /sys/module/cpuidle/parameters/lp2_in_idle 1
     chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_input_time
 
+# Display Settings
+    write /sys/devices/nvhost/tegradc.0/smartdimmer/enable 1
+    write /sys/devices/nvhost/tegradc.0/smartdimmer/bin_width 1
+
 # Setup CPU for "balanced" mode 
     setprop sys.cpu.mode 1
 
@@ -143,10 +151,6 @@ on boot
     mkdir /data/gps
     chown system system /data/gps
     chmod 770 /data/gps
-
-# Wiimote connect status
-    write /data/misc/wminput/connected 0
-    chmod 0666 /data/misc/wminput/connected
 
 # GPS init
     write /sys/class/gpio/export 162
