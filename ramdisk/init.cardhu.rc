@@ -64,15 +64,16 @@ on boot
     chown nfc nfc /dev/pn544
 
 # nvdps
-    chown -R system system /sys/class/graphics
+#    chown -R system system /sys/class/graphics
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
 
 # didim
-    chown system system /sys/class/graphics/fb0/device/smartdimmer/enable
-    chown system system /sys/class/graphics/fb0/device/smartdimmer/aggressiveness
-    chown system system /sys/class/graphics/fb0/device/smartdimmer/phase_in_adjustments
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/enable
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/aggressiveness
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/phase_in_adjustments
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/bin_width
 
 # power
     chown system system /sys/kernel/tegra_cap/core_cap_level
@@ -87,6 +88,8 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/pwr_cap_limit_4
 
 # Sensor
+    mkdir /data/sensors 0751 system system
+    mkdir /data/lightsensor 0751 system system
     chmod 666 /dev/nvhost-ctrl
     chmod 666 /dev/nvhost-display
     chmod 666 /dev/nvhost-dsi
@@ -396,3 +399,11 @@ service touch_update /system/bin/touch_fw_update --default
     group system
     disabled
     oneshot
+
+on property:init.svc.sensors-config=stopped
+    chmod 644 /data/sensors/AMI304_Config.ini
+    chown system system /data/sensors/AMI304_Config.ini
+    chmod 644 /data/sensors/KXTF9_Calibration.ini
+    chown system system /data/sensors/KXTF9_Calibration.ini
+    chmod 644 /data/lightsensor/AL3010_Config.ini
+    chown system system /data/lightsensor/AL3010_Config.ini
