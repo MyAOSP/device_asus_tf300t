@@ -23,8 +23,8 @@ DEVICE_PACKAGE_OVERLAYS += device/asus/tf700t/overlay
 
 # This device is hdpi.
 PRODUCT_AAPT_CONFIG := large xhdpi hdpi
-PRODUCT_AAPT_PREF_CONFIG := hdpi
-PRODUCT_LOCALES += hdpi
+PRODUCT_AAPT_PREF_CONFIG := xhdpi
+PRODUCT_LOCALES += xhdpi
 
 # Prebuilt kernel location
 #ifeq ($(TARGET_PREBUILT_KERNEL),)
