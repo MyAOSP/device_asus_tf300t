@@ -22,12 +22,12 @@ $(call inherit-product-if-exists, vendor/asus/tf700t/tf700t-vendor.mk)
 DEVICE_PACKAGE_OVERLAYS += device/asus/tf700t/overlay
 
 # This device is hdpi.
-#PRODUCT_AAPT_CONFIG := xlarge hdpi mdpi
-#PRODUCT_AAPT_PREF_CONFIG := hdpi
+PRODUCT_AAPT_CONFIG := xlarge hdpi long
+PRODUCT_AAPT_PREF_CONFIG := hdpi
 #PRODUCT_LOCALES += hdpi
 
-PRODUCT_AAPT_CONFIG := normal large xlarge hdpi
-PRODUCT_AAPT_PREF_CONFIG := xlarge hdpi
+#PRODUCT_AAPT_CONFIG := normal large xlarge hdpi
+#PRODUCT_AAPT_PREF_CONFIG := xlarge hdpi
 
 # Prebuilt kernel location
 #ifeq ($(TARGET_PREBUILT_KERNEL),)
@@ -159,7 +159,21 @@ PRODUCT_PROPERTY_OVERRIDES := \
 
 # Tegra 3 spacific overrides
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.tegra.nvmmlite=1
+    persist.tegra.nvmmlite=1 \
+    persist.sys.NV_FPSLIMIT=60
+
+# UI
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.performance.tuning=1 \
+    video.accelerate.hw=1 \
+    ro.kernel.android.checkjni=0 \
+    ro.kernel.checkjni=0 \
+    ro.mot.eri.losalert.delay=1000 \
+    persist.sys.strictmode.visual=0 \
+    persist.sys.strictmode.disable=1 \
+    dalvik.vm.execution-mode=int:jit \
+    com.ti.omap_enhancement=true \
+   windowsmgr.max_events_per_sec=300
 
 # Prime spacific overrides
 PRODUCT_PROPERTY_OVERRIDES += \
