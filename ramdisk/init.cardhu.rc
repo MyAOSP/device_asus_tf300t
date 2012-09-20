@@ -122,8 +122,8 @@ on boot
     chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_input_time
 
 # Display Settings
-    write /sys/devices/nvhost/tegradc.0/smartdimmer/enable 1
-    write /sys/devices/nvhost/tegradc.0/smartdimmer/bin_width 1
+    write /sys/devices/tegradc.0/smartdimmer/enable 1
+    write /sys/devices/tegradc.0/smartdimmer/bin_width 1
 
 # Setup CPU for "balanced" mode 
     setprop sys.cpu.mode 1
@@ -148,16 +148,15 @@ on boot
     chmod 0666 /data/misc/wminput/connected
 
 # GPS
-    mkdir /data/gps
-    chown system system /data/gps
-    chmod 770 /data/gps
+    mkdir /data/gps 700 gps system
+    chown gps system /data/gps
 
 # GPS init
-    write /sys/class/gpio/export 162
-    write /sys/class/gpio/gpio162/value 0
-    write /sys/class/gpio/gpio162/direction out
-    chown root system /sys/class/gpio/gpio162/value
-    chmod 0664 /sys/class/gpio/gpio162/value
+#    write /sys/class/gpio/export 162
+#    write /sys/class/gpio/gpio162/value 0
+#    write /sys/class/gpio/gpio162/direction out
+#    chown root system /sys/class/gpio/gpio162/value
+#    chmod 0664 /sys/class/gpio/gpio162/value
 
 # ril
     mkdir /data/modem 0770 radio system
@@ -281,20 +280,33 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
     group system bluetooth net_bt_admin misc
     disabled
 
+
+# Start GPS daemon
+on boot
+  write /sys/class/gpio/export 162
+  write /sys/class/gpio/gpio162/value 0
+  write /sys/class/gpio/gpio162/direction out
+  write /sys/class/gpio/export 163
+  write /sys/class/gpio/gpio163/direction out
+  write /sys/class/gpio/gpio163/value 1
+  chmod 0660 /sys/class/gpio/gpio162/value
+  chown gps gps /sys/class/gpio/gpio162/value
+  chmod 0660 /sys/class/gpio/gpio163/value
+  chown gps gps /sys/class/gpio/gpio162/value
+
+service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
+  class late_start
+  socket gps seqpacket 0660 gps system
+  user gps
+  group system inet
+
 # Start GPS daemon
 #  on boot
 #  service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
 #  user root
+#  socket gps seqpacket 0666 root root
 #  group root
 #  class late_start
-
-# Start GPS daemon
-  on boot
-  service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
-  user root
-  socket gps seqpacket 0666 root root
-  group root
-  class late_start
 
 
 # Mount usb drives as /usbdrive. Generally usb drives are formatted with FAT
