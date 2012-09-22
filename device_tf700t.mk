@@ -21,13 +21,11 @@ $(call inherit-product-if-exists, vendor/asus/tf700t/tf700t-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/asus/tf700t/overlay
 
+	
 # This device is hdpi.
-PRODUCT_AAPT_CONFIG := xlarge hdpi long
+PRODUCT_AAPT_CONFIG := large hdpi mdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
-#PRODUCT_LOCALES += hdpi
-
-#PRODUCT_AAPT_CONFIG := normal large xlarge hdpi
-#PRODUCT_AAPT_PREF_CONFIG := xlarge hdpi
+PRODUCT_LOCALES += hdpi
 
 # Prebuilt kernel location
 #ifeq ($(TARGET_PREBUILT_KERNEL),)
@@ -191,8 +189,8 @@ $(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
 # Call the vendor to setup propiatory files
 $(call inherit-product-if-exists, vendor/asus/tf700t/tf700t-vendor.mk)
 
-# Copy bcm4329 firmware
-#$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+# Copy bcm4330 firmware
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 # Device naming
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
