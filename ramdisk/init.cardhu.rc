@@ -33,8 +33,8 @@ on post-fs-data
     mkdir /data/misc/wminput 0776 system system
 
     #tmp fix for gps
-    mkdir /tmp 0777 gps gps
-    chown gps gps /tmp
+    mkdir /tmp 0777 gps system
+    chown gps system /tmp
 
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
