@@ -139,12 +139,6 @@ PRODUCT_COPY_FILES += \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml \
     $(LOCAL_PATH)/asusdec/com.cyanogenmod.asusdec.xml:system/etc/permissions/com.cyanogenmod.asusdec.xml
 
-
-com.asus.hardware.02.xml
-com.asus.hardware.03.xml
-com.asus.hardware.04.xml
-com.asus.hardware.05.xml
-com.asus.hardware.07.xml
 # Build characteristics setting 
 PRODUCT_CHARACTERISTICS := tablet
 
