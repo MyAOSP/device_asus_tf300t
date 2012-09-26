@@ -72,6 +72,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/bin/wifimacwriter:system/bin/wifimacwriter \
     $(LOCAL_PATH)/prebuilt/bin/touch_fw_update:system/bin/touch_fw_update 
 
+# Prebuilt apks
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/app/FixPortrait.apk:system/app/FixPortrait.apk 
+
 # Input device configuration files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/idc/atmel-maxtouch.idc:system/usr/idc/atmel-maxtouch.idc \

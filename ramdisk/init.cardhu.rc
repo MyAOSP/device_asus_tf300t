@@ -37,6 +37,7 @@ on post-fs-data
     chown gps system /data/gps
     chown gps system /sys/module/cpu_tegra/parameters/gps_start
     chmod 777 /sys/module/cpu_tegra/parameters/gps_start
+    echo 1 > /sys/module/cpu_tegra/parameters/gps_start
     chown gps system /dev/ttyHS1
     chmod 0777 /dev/ttyHS1
 
@@ -293,16 +294,17 @@ on boot
   write /sys/class/gpio/export 163
   write /sys/class/gpio/gpio163/direction out
   write /sys/class/gpio/gpio163/value 1
-  chmod 0777 /sys/class/gpio/gpio162/value
+  chmod 0660 /sys/class/gpio/gpio162/value
   chown gps gps /sys/class/gpio/gpio162/value
-  chmod 0777 /sys/class/gpio/gpio163/value
+  chmod 0660 /sys/class/gpio/gpio163/value
   chown gps gps /sys/class/gpio/gpio162/value
 
 service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
   class late_start
-  socket gps seqpacket 0660 gps system
-  user gps
-  group system inet
+  socket gps seqpacket 0666 gps system
+  user root
+  group root
+#  group system inet
 
 # Start GPS daemon
 #  on boot
@@ -344,23 +346,6 @@ service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
 on property:tf.enable=y
     mkdir /data/tf
     start tf_daemon
-
-#insmod bcmdhd driver for BCM4330
-#on property:wifi.module.type=0
-#    insmod /system/lib/modules/bcmdhd.ko
-
-#insmod bcmdhd driver for BCM4330/BCM4334
-#on property:wifi.module.type=0
-#    insmod /system/lib/modules/bcmdhd.ko
-
-#on property:wifi.module.type=2
-#    insmod /system/lib/modules/bcmdhd.ko
-
-#on property:wifi.module.type=4
-#    insmod /system/lib/modules/bcmdhd.ko
-
-on property:wifi.module.type=5
-#    insmod /system/lib/modules/bcmdhd_34.ko
 
 # stop ril-daemon if this is a wifi-only device
 on property:ro.carrier=wifi-only
