@@ -44,7 +44,7 @@ on post-fs-data
 # GPS
     mkdir /data/gps
     chown system system /data/gps
-    chmod 770 /data/gp
+    chmod 770 /data/gps
 
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
@@ -105,8 +105,8 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/pwr_cap_limit_4
 
 # Sensor
-    mkdir /data/sensors 0777 system system
-    mkdir /data/lightsensor 0777 system system
+    mkdir /data/sensors 0640 system system
+    mkdir /data/lightsensor 0640 system system
     chmod 666 /dev/nvhost-ctrl
     chmod 666 /dev/nvhost-display
     chmod 666 /dev/nvhost-dsi
@@ -160,6 +160,12 @@ on boot
     write /data/misc/wminput/connected 0
     chmod 0666 /data/misc/wminput/connected
 
+# GPS init
+    write /sys/class/gpio/export 162
+    write /sys/class/gpio/gpio162/value 0
+    write /sys/class/gpio/gpio162/direction out
+    chown root system /sys/class/gpio/gpio162/value
+    chmod 0664 /sys/class/gpio/gpio162/value
 
 # GPS init
 #    write /sys/class/gpio/export 162
