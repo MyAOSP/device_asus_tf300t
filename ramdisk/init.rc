@@ -53,9 +53,6 @@ loglevel 8
     mkdir /cache 0771 system cache
     mkdir /config 0500 root root
 
-# Create /tmp for GPS
-    mkdir /tmp 0777 gps gps
-
     # Directory for putting things only root should see.
     mkdir /mnt/secure 0700 root root
 
@@ -195,6 +192,9 @@ on post-fs-data
     mkdir /data/ssh 0750 root shell
     mkdir /data/ssh/empty 0700 root root
     mkdir /data/radio 0770 radio radio
+
+# Create /tmp for GPS
+    symlink /data/local/tmp /tmp
 
     # create dalvik-cache and double-check the perms, so as to enforce our permissions
     mkdir /data/dalvik-cache 0771 system system
