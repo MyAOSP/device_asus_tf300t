@@ -115,6 +115,12 @@ PRODUCT_COPY_FILES += \
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.02.xml:system/etc/permissions/com.asus.hardware.02.xml \
+    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.03.xml:system/etc/permissions/com.asus.hardware.03.xml \
+    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.04.xml:system/etc/permissions/com.asus.hardware.04.xml \
+    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.05.xml:system/etc/permissions/com.asus.hardware.05.xml \
+    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.07.xml:system/etc/permissions/com.asus.hardware.07.xml \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
@@ -133,6 +139,12 @@ PRODUCT_COPY_FILES += \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml \
     $(LOCAL_PATH)/asusdec/com.cyanogenmod.asusdec.xml:system/etc/permissions/com.cyanogenmod.asusdec.xml
 
+
+com.asus.hardware.02.xml
+com.asus.hardware.03.xml
+com.asus.hardware.04.xml
+com.asus.hardware.05.xml
+com.asus.hardware.07.xml
 # Build characteristics setting 
 PRODUCT_CHARACTERISTICS := tablet
 
