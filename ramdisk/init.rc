@@ -50,6 +50,8 @@ loglevel 8
 
     mkdir /system
     mkdir /data 0771 system system
+    mkdir /data/local 0751 root root
+    mkdir /data/local/tmp 0771 shell shell
     mkdir /cache 0771 system cache
     mkdir /config 0500 root root
 
@@ -84,6 +86,9 @@ loglevel 8
     write /proc/sys/vm/mmap_min_addr 32768
     write /proc/sys/kernel/sched_rt_runtime_us 950000
     write /proc/sys/kernel/sched_rt_period_us 1000000
+
+# Create /tmp for GPS
+    symlink /data/local/tmp /tmp
 
 # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
@@ -179,11 +184,9 @@ on post-fs-data
     # give system access to wpa_supplicant.conf for backup and restore
     mkdir /data/misc/wifi 0770 wifi wifi
     chmod 0660 /data/misc/wifi/wpa_supplicant.conf
-    mkdir /data/local 0751 root root
 
     # For security reasons, /data/local/tmp should always be empty.
     # Do not place files or directories in /data/local/tmp
-    mkdir /data/local/tmp 0771 shell shell
     mkdir /data/data 0771 system system
     mkdir /data/app-private 0771 system system
     mkdir /data/app-asec 0700 root root
@@ -192,9 +195,6 @@ on post-fs-data
     mkdir /data/ssh 0750 root shell
     mkdir /data/ssh/empty 0700 root root
     mkdir /data/radio 0770 radio radio
-
-# Create /tmp for GPS
-    symlink /data/local/tmp /tmp
 
     # create dalvik-cache and double-check the perms, so as to enforce our permissions
     mkdir /data/dalvik-cache 0771 system system
