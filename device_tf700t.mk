@@ -67,6 +67,7 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilt binaires
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/gps.sh:system/bin/gps.sh \
     $(LOCAL_PATH)/prebuilt/bin/rild:system/bin/rild \
     $(LOCAL_PATH)/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \
     $(LOCAL_PATH)/prebuilt/bin/wifimacwriter:system/bin/wifimacwriter \
