@@ -21,7 +21,7 @@ $(call inherit-product-if-exists, vendor/asus/tf700t/tf700t-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/asus/tf700t/overlay
 
-	
+
 # This device is hdpi.
 PRODUCT_AAPT_CONFIG := xlarge hdpi mdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
@@ -71,11 +71,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/bin/rild:system/bin/rild \
     $(LOCAL_PATH)/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \
     $(LOCAL_PATH)/prebuilt/bin/wifimacwriter:system/bin/wifimacwriter \
-    $(LOCAL_PATH)/prebuilt/bin/touch_fw_update:system/bin/touch_fw_update 
+    $(LOCAL_PATH)/prebuilt/bin/touch_fw_update:system/bin/touch_fw_update
 
 # Prebuilt apks
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/app/FixPortrait.apk:system/app/FixPortrait.apk 
+    $(LOCAL_PATH)/prebuilt/app/FixPortrait.apk:system/app/FixPortrait.apk
 
 # Input device configuration files
 PRODUCT_COPY_FILES += \
@@ -111,7 +111,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd.bin:system/vendor/firmware/bcm4329/fw_bcmdhd.bin \
     $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_apsta.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin 
+    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin
 
 
 # These are the hardware-specific features
@@ -140,11 +140,15 @@ PRODUCT_COPY_FILES += \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml \
     $(LOCAL_PATH)/asusdec/com.cyanogenmod.asusdec.xml:system/etc/permissions/com.cyanogenmod.asusdec.xml
 
-# Build characteristics setting 
+# Build characteristics setting
 PRODUCT_CHARACTERISTICS := tablet
 
 # This device have enough room for precise davick
 PRODUCT_TAGS += dalvik.gc.type-precise
+
+# torch app
+PRODUCT_PACKAGES += \
+	Torch
 
 # Extra packages to build for this device
 PRODUCT_PACKAGES += \
