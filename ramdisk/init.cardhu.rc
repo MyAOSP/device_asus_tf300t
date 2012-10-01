@@ -29,22 +29,9 @@ on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/nvcam 0700 media camera
     chown dhcp dhcp /data/misc/dhcp
     mkdir /data/misc/wminput 0776 system system
-
-# GPS
-#    mkdir /data/gps 777 gps system
-#    chown gps system /data/gps
-#    chown gps system /sys/module/cpu_tegra/parameters/gps_start
-#    chmod 777 /sys/module/cpu_tegra/parameters/gps_start
-#    echo 1 > /sys/module/cpu_tegra/parameters/gps_start
-#    chown gps system /dev/ttyHS1
-#    chmod 0777 /dev/ttyHS1
-
-# GPS
-    mkdir /data/gps
-    chown system system /data/gps
-    chmod 770 /data/gps
 
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
@@ -72,12 +59,10 @@ on boot
     setprop ro.bt.bdaddr_path "/system/etc/bluetooth/bdaddr"
 
 #NFC
-    setprop ro.nfc.port "I2C"
-    chmod 0660 /dev/pn544
-    chown nfc nfc /dev/pn544
+#   setprop ro.nfc.port "I2C"
 
 # nvdps
-#    chown -R system system /sys/class/graphics
+    chown system system /sys/class/graphics/fb0/device/nvdps
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
@@ -116,7 +101,25 @@ on boot
     chmod 666 /dev/nvhost-mpe
     chmod 666 /dev/nvhost-vi
     chown system system /sys/bus/iio/devices/device0/als_ir_mode
+    chown system system /sys/bus/iio/devices/device0/als_enable
+    chown system system /sys/bus/iio/devices/device0/als_high_threshold
+    chown system system /sys/bus/iio/devices/device0/als_low_threshold
+
     chown system system /sys/bus/iio/devices/device0/proximity_enable
+    chown system system /sys/bus/iio/devices/device0/proximity_high_threshold
+    chown system system /sys/bus/iio/devices/device0/proximity_low_threshold
+    chown system system /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/enable
+    chown system system /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/delay
+    chmod 777 /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/enable
+    chmod 777 /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/delay
+
+    # new nodes from linux kernel v3.4
+    chown system system /sys/bus/iio/devices/iio:device0/als_ir_mode
+    chown system system /sys/bus/iio/devices/iio:device0/als_enable
+    chown system system /sys/bus/iio/devices/iio:device0/proximity_enable
+    insmod /system/lib/modules/mpu3050.ko
+    insmod /system/lib/modules/inv_mpu_kxtf9.ko
+    insmod /system/lib/modules/inv_mpu_ak8975.ko
 
 # Power management settings
     chown system system /sys/module/cpu_tegra3/parameters/no_lp
@@ -156,6 +159,11 @@ on boot
     write /sys/block/mmcblk0/queue/read_ahead_kb 2048
     write /sys/block/mmcblk1/queue/read_ahead_kb 2048
 
+# GPS
+    mkdir /data/gps
+    chown system system /data/gps
+    chmod 770 /data/gps
+
 # Wiimote connect status
     write /data/misc/wminput/connected 0
     chmod 0666 /data/misc/wminput/connected
@@ -167,16 +175,12 @@ on boot
     chown root system /sys/class/gpio/gpio162/value
     chmod 0664 /sys/class/gpio/gpio162/value
 
-# GPS init
-#    write /sys/class/gpio/export 162
-#    write /sys/class/gpio/gpio162/value 0
-#    write /sys/class/gpio/gpio162/direction out
-#    chown root system /sys/class/gpio/gpio162/value
-#    chmod 0664 /sys/class/gpio/gpio162/value
-
 # ril
     mkdir /data/modem 0770 radio system
     chown radio system /sys/devices/virtual/ril/files/prox_onoff
+    chown radio system /sys/devices/platform/baseband_xmm_power/xmm_nml_reset
+    chown radio system /sys/devices/virtual/ril/files/crash_dump_onoff
+    chmod 0660 /sys/devices/virtual/ril/files/crash_dump_onoff
 
 # NTFS and exFAT support
     insmod /sbin/tntfs.ko
@@ -188,9 +192,23 @@ on boot
 # Touch
     start touch_update
     chown system system /proc/ektf_dbg
+    chmod 0660 /proc/ektf_dbg
 
 # BB mapping symbolic name to the logging ttyACM port
     symlink /dev/ttyACM2 /dev/log_modem
+
+# Enable USB Remote Wakeup on USB2 for modems
+    write /sys/bus/usb/devices/1-1/power/wakeup enabled
+
+# USB On The Go - Host Mode
+    chown system system /sys/devices/platform/tegra-otg/enable_host
+
+on property:ro.debuggable=1
+    # Touchscreen Config-UI interface
+    chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/mem_access
+    chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
+    chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
+    chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
 
 # stop ril-daemon if this is a wifi-only device
 on property:ro.carrier=wifi-only
@@ -296,20 +314,6 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
     group system bluetooth net_bt_admin misc
     disabled
 
-
-# Start GPS daemon
-#on boot
-#  write /sys/class/gpio/export 162
-#  write /sys/class/gpio/gpio162/value 0
-#  write /sys/class/gpio/gpio162/direction out
-#  write /sys/class/gpio/export 163
-#  write /sys/class/gpio/gpio163/direction out
-#  write /sys/class/gpio/gpio163/value 1
-#  chmod 0660 /sys/class/gpio/gpio162/#value
-#  chown gps gps /sys/class/gpio/gpio162/value
-#  chmod 0660 /sys/class/gpio/gpio163/value
-#  chown gps gps /sys/class/gpio/gpio162/value
-
 # Start GPS daemon
   on boot
   service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
@@ -317,21 +321,6 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
   socket gps seqpacket 0666 root root
   group root
   class late_start
-
-#service gps-daemon /system/bin/glgps_nvidiaTegra2android -c /system/etc/gps/gpsconfig.xml
-#  class late_start
-#  socket gps seqpacket 0666 gps system
-#  user root
-#  group root
-#  group system inet
-
-# Start GPS daemon
-#  on boot
-#  service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
-#  user root
-#  socket gps seqpacket 0666 root root
-#  group root
-#  class late_start
 
 
 # Mount usb drives as /usbdrive. Generally usb drives are formatted with FAT
