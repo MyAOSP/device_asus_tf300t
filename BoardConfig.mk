@@ -71,13 +71,13 @@ BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE           := bcmdhd
 
 #new 
-WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
+#WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/bcm4330/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/bcm4330/fw_bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin"
-WIFI_DRIVER_MODULE_NAME          := "bcmdhd"
-WIFI_DRIVER_MODULE_ARG           := "iface_name=wlan0 firmware_path=/system/vendor/firmware/fw_bcmdhd.bin nvram_path=/system/etc/nvram_4339.txt"
+#WIFI_DRIVER_MODULE_NAME          := "bcmdhd"
+#WIFI_DRIVER_MODULE_ARG           := "iface_name=wlan0 firmware_path=/system/vendor/firmware/fw_bcmdhd.bin nvram_path=/system/etc/nvram_4339.txt"
 
 
 TARGET_USERIMAGES_USE_EXT4 := true
