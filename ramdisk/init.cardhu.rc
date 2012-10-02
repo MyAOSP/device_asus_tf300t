@@ -187,7 +187,7 @@ on boot
     insmod /sbin/texfat.ko
 
 #insmod cfg80211.ko for cfg80211 and P2P mode.
-#    insmod /system/lib/modules/cfg80211.ko
+    insmod /system/lib/modules/cfg80211.ko
 
 # Touch
     start touch_update
@@ -403,6 +403,22 @@ on property:ril.testmode=1
 on property:ril.testmode=0
     stop ril-daemon-test
     start ril-daemon
+
+#insmod bcmdhd driver for BCM4330/BCM4334
+on property:wifi.module.type=0
+    insmod /system/lib/modules/bcmdhd.ko
+
+on property:wifi.module.type=2
+    insmod /system/lib/modules/bcmdhd.ko
+
+on property:wifi.module.type=4
+    insmod /system/lib/modules/bcmdhd.ko
+
+on property:wifi.module.type=5
+    insmod /system/lib/modules/bcmdhd_34.ko
+
+on property:wifi.module.type=6
+    insmod /system/lib/modules/bcmdhd_34.ko
 
 # End of testmode patches.
 
