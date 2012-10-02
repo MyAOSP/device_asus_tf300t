@@ -90,7 +90,7 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 #ARGET_KERNEL_CONFIG := tf700t_bjr_defconfig
 
 # Prebuilt Kernel Fallback
-TARGET_PREBUILT_KERNEL := device/asus/tf700t/kernel
+TARGET_PREBUILT_KERNEL := device/asus/tf700t/prebuilt/kernel
 
 # Custom Tools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf700t/releasetools/tf700t_ota_from_target_files
