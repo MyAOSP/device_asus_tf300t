@@ -28,14 +28,15 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 #PRODUCT_LOCALES += hdpi
 
 # Prebuilt kernel location
-#ifeq ($(TARGET_PREBUILT_KERNEL),)
-#        LOCAL_KERNEL := device/asus/tf700t/kernel
-#else
-#        LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-#endif
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+        LOCAL_KERNEL := device/asus/tf700t/prebuilt/kernel
+else
+        LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
 
 # Files needed for boot image
 PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel \
     $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.rc:root/init.cardhu.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.keyboard.rc:root/init.cardhu.keyboard.rc \
@@ -43,20 +44,15 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.cardhu.usb.rc:root/init.cardhu.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.cpu.rc:root/init.cardhu.cpu.rc
 
-    #$(LOCAL_KERNEL):kernel \
 
 # Kernel modules
-#PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/lib/baseband_usb_chr.ko:system/lib/modules/baseband_usb_chr.ko \
     $(LOCAL_PATH)/prebuilt/lib/baseband-xmm-power2.ko:system/lib/modules/baseband-xmm-power2.ko \
+    $(LOCAL_PATH)/prebuilt/lib/brcmfmac.ko:system/lib/modules/brcmfmac.ko \
     $(LOCAL_PATH)/prebuilt/lib/raw_ip_net.ko:system/lib/modules/raw_ip_net.ko \
     $(LOCAL_PATH)/prebuilt/lib/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/prebuilt/lib/tcrypt.ko:system/lib/modules/tcrypt.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcm4329.ko:system/lib/modules/bcm4329.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcmdhd_29.ko:system/lib/modules/bcmdhd_29.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcmdhd_34.ko:system/lib/modules/bcmdhd_34.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcmdhd.ko:system/lib/modules/bcmdhd.ko \
-    $(LOCAL_PATH)/prebuilt/lib/cfg80211.ko:system/lib/modules/cfg80211.ko
+    $(LOCAL_PATH)/prebuilt/lib/tcrypt.ko:system/lib/modules/tcrypt.ko 
 
 # Prebuilt configuration files
 PRODUCT_COPY_FILES += \
