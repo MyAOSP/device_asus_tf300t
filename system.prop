@@ -3,6 +3,11 @@
 #
 ro.carrier=wifi-only
 ro.sf.lcd_density=240
+ro.epad.model=TF700T
+ro.product.model=TF700T
+ro.epad.model_id=04
+persist.sys.fw.camera.status=1
+tf.enable=y
 
 # Addidional info for Settings/About/Hardware
 ro.device.cpu=nVidia Tegra 3, Quad-core 1.7 GHz

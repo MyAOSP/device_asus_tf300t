@@ -21,7 +21,7 @@ on init
 
 sysclktz 0
 
-loglevel 8
+loglevel 3
 
 # setup the global environment
     export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
@@ -34,6 +34,8 @@ loglevel 8
     export ASEC_MOUNTPOINT /mnt/asec
     export LOOP_MOUNTPOINT /mnt/obb
     export BOOTCLASSPATH /system/framework/core.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/framework2.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar
+    export TERMINFO /system/etc/terminfo
+    export TERM linux
 
 # Backward compatibility
     symlink /system/etc /etc
@@ -50,8 +52,6 @@ loglevel 8
 
     mkdir /system
     mkdir /data 0771 system system
-    mkdir /data/local 0751 root root
-    mkdir /data/local/tmp 0771 shell shell
     mkdir /cache 0771 system cache
     mkdir /config 0500 root root
 
@@ -86,9 +86,6 @@ loglevel 8
     write /proc/sys/vm/mmap_min_addr 32768
     write /proc/sys/kernel/sched_rt_runtime_us 950000
     write /proc/sys/kernel/sched_rt_period_us 1000000
-
-# Create /tmp for GPS
-    symlink /data/local/tmp /tmp
 
 # Create cgroup mount points for process groups
     mkdir /dev/cpuctl
@@ -184,9 +181,11 @@ on post-fs-data
     # give system access to wpa_supplicant.conf for backup and restore
     mkdir /data/misc/wifi 0770 wifi wifi
     chmod 0660 /data/misc/wifi/wpa_supplicant.conf
+    mkdir /data/local 0751 root root
 
     # For security reasons, /data/local/tmp should always be empty.
     # Do not place files or directories in /data/local/tmp
+    mkdir /data/local/tmp 0771 shell shell
     mkdir /data/data 0771 system system
     mkdir /data/app-private 0771 system system
     mkdir /data/app-asec 0700 root root
@@ -439,6 +438,7 @@ service surfaceflinger /system/bin/surfaceflinger
     onrestart restart zygote
 
 service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
+#service zygote /system/xbin/strace -f -tt -o /cache/boot.strace /system/bin/app_process -Xzygote /system/bin --zygote --start-system-server
     class main
     socket zygote stream 660 root system
     onrestart write /sys/android_power/request_state wake

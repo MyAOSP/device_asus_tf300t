@@ -23,9 +23,9 @@ DEVICE_PACKAGE_OVERLAYS += device/asus/tf700t/overlay
 
 
 # This device is hdpi.
-PRODUCT_AAPT_CONFIG := xlarge hdpi mdpi
-PRODUCT_AAPT_PREF_CONFIG := hdpi
-#PRODUCT_LOCALES += hdpi
+PRODUCT_CHARACTERISTICS := tablet
+PRODUCT_AAPT_CONFIG := normal large xlarge hdpi
+PRODUCT_AAPT_PREF_CONFIG := xlarge hdpi
 
 # Prebuilt kernel location
 ifeq ($(TARGET_PREBUILT_KERNEL),)
@@ -37,101 +37,52 @@ endif
 # Files needed for boot image
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
-    $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.rc:root/init.cardhu.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.keyboard.rc:root/init.cardhu.keyboard.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.cardhu.rc:root/ueventd.cardhu.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.usb.rc:root/init.cardhu.usb.rc \
-    $(LOCAL_PATH)/ramdisk/init.cardhu.cpu.rc:root/init.cardhu.cpu.rc
-
+    $(LOCAL_PATH)/ramdisk/init.cardhu.cpu.rc:root/init.cardhu.cpu.rc \
+    $(LOCAL_PATH)/ramdisk/fstab.cardhu:root/fstab.cardhu
 
 # Kernel modules
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/lib/baseband_usb_chr.ko:system/lib/modules/baseband_usb_chr.ko \
-    $(LOCAL_PATH)/prebuilt/lib/baseband-xmm-power2.ko:system/lib/modules/baseband-xmm-power2.ko \
-    $(LOCAL_PATH)/prebuilt/lib/brcmfmac.ko:system/lib/modules/brcmfmac.ko \
-    $(LOCAL_PATH)/prebuilt/lib/raw_ip_net.ko:system/lib/modules/raw_ip_net.ko \
-    $(LOCAL_PATH)/prebuilt/lib/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/prebuilt/lib/tcrypt.ko:system/lib/modules/tcrypt.ko
-  
-# not needed
-#  $(LOCAL_PATH)/prebuilt/lib/bcm4329.ko:system/lib/modules/bcm4329.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcmdhd_29.ko:system/lib/modules/bcmdhd_29.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcmdhd_34.ko:system/lib/modules/bcmdhd_34.ko \
-    $(LOCAL_PATH)/prebuilt/lib/bcmdhd.ko:system/lib/modules/bcmdhd.ko \
-    $(LOCAL_PATH)/prebuilt/lib/cfg80211.ko:system/lib/modules/cfg80211.ko
+    $(LOCAL_PATH)/prebuilt/lib/raw_ip_net.ko:system/lib/modules/raw_ip_net.ko 
 
 # Prebuilt configuration files
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/cpu.sh:system/bin/cpu.sh \
     $(LOCAL_PATH)/prebuilt/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/prebuilt/gpsconfig.xml:system/etc/gps/gpsconfig.xml \
-    $(LOCAL_PATH)/prebuilt/gpsconfig.xml:system/etc/gps/glconfig.xml
+    $(LOCAL_PATH)/prebuilt/audio_policy.conf:system/etc/audio_policy.conf
 
-# Prebuilt binaires
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/gps.sh:system/bin/gps.sh \
-    $(LOCAL_PATH)/prebuilt/bin/rild:system/bin/rild \
-    $(LOCAL_PATH)/prebuilt/bin/brcm_patchram_plus:system/bin/brcm_patchram_plus \
-    $(LOCAL_PATH)/prebuilt/bin/wifimacwriter:system/bin/wifimacwriter \
-    $(LOCAL_PATH)/prebuilt/bin/touch_fw_update:system/bin/touch_fw_update
-
-# Prebuilt apks
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/app/FixPortrait.apk:system/app/FixPortrait.apk
 
 # Input device configuration files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/idc/atmel-maxtouch.idc:system/usr/idc/atmel-maxtouch.idc \
+    $(LOCAL_PATH)/idc/elantech_touchscreen.idc:system/usr/idc/elantech_touchscreen.idc \
     $(LOCAL_PATH)/idc/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc \
     $(LOCAL_PATH)/idc/panjit_touch.idc:system/usr/idc/panjit_touch.idc \
+    $(LOCAL_PATH)/idc/qwerty2.idc:system/usr/idc/qwerty2.idc \
+    $(LOCAL_PATH)/idc/qwerty.idc:system/usr/idc/qwerty.idc \
+    $(LOCAL_PATH)/idc/raydium_ts.idc:system/usr/idc/raydium_ts.idc \
+    $(LOCAL_PATH)/idc/sis_touch.idc:system/usr/idc/sis_touch.idc \
+    $(LOCAL_PATH)/idc/Vendor_0457_Product_0817.idc:system/usr/idc/Vendor_0457_Product_0817.idc \
     $(LOCAL_PATH)/prebuilt/asusdec.kcm:system/usr/keychars/asusdec.kcm \
     $(LOCAL_PATH)/prebuilt/asusdec.kl:system/usr/keylayout/asusdec.kl \
     $(LOCAL_PATH)/prebuilt/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/prebuilt/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl
 
-# Camera/WiFi/BT Firmware
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/nvram.txt:system/etc/nvram_4329.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/nvram_4330.txt:system/etc/nvram_4330.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/nvram_murata.txt:system/etc/nvram_murata.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh615.txt:system/etc/nvram_nh615.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh660.txt:system/etc/nvram_nh660.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh665.txt:system/etc/nvram_nh665.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/nvram_nh669.txt:system/etc/nvram_nh669.txt \
-    $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0863.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/BCM4329B1_002.002.023.0797.0879.hcd:system/etc/firmware/BCM4329B1_002.002.023.0797.0879.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0379.0390.hcd:system/etc/firmware/BCM4330B1_002.001.003.0379.0390.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0609.0636.hcd:system/etc/firmware/BCM4330B1_002.001.003.0609.0636.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/BCM4330B1_002.001.003.0750.0820.hcd:system/etc/firmware/BCM4330B1_002.001.003.0750.0820.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329.hcd:system/etc/firmware/bcm4329.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330.hcd:system/etc/firmware/bcm4330.hcd \
-    $(LOCAL_PATH)/prebuilt/firmware/fw_bcm4329_apsta.bin:system/vendor/firmware/fw_bcm4329_apsta.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/fw_bcm4329.bin:system/vendor/firmware/fw_bcm4329.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd.bin:system/vendor/firmware/bcm4330/fw_bcmdhd.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_b1.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_b1.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_apsta.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_apsta.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4330/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd.bin:system/vendor/firmware/bcm4329/fw_bcmdhd.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_apsta.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin \
-    $(LOCAL_PATH)/prebuilt/firmware/bcm4329/fw_bcmdhd_p2p.bin:system/vendor/firmware/bcm4329/fw_bcmdhd_p2p.bin
-
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
-    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.02.xml:system/etc/permissions/com.asus.hardware.02.xml \
-    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.03.xml:system/etc/permissions/com.asus.hardware.03.xml \
-    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.04.xml:system/etc/permissions/com.asus.hardware.04.xml \
-    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.05.xml:system/etc/permissions/com.asus.hardware.05.xml \
-    $(LOCAL_PATH)/prebuilt/etc/com.asus.hardware.07.xml:system/etc/permissions/com.asus.hardware.07.xml \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
+    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.location.xml:system/etc/permissions/android.hardware.location.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
-    frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
+    frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
@@ -141,9 +92,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml \
     $(LOCAL_PATH)/asusdec/com.cyanogenmod.asusdec.xml:system/etc/permissions/com.cyanogenmod.asusdec.xml
-
-# Build characteristics setting
-PRODUCT_CHARACTERISTICS := tablet
 
 # This device have enough room for precise davick
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -159,13 +107,15 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs \
     audio.a2dp.default \
+    audio.usb.default \
+    libtinyalsa \
     libaudioutils \
     libinvensense_mpl \
     AutoParts_tfp \
     blobpack_tfp \
     mischelp \
     com.cyanogenmod.asusdec \
-    libasusdec_jni
+    libasusdec_jni 
 
 # Propertys spacific for this device
 PRODUCT_PROPERTY_OVERRIDES := \
@@ -175,12 +125,12 @@ PRODUCT_PROPERTY_OVERRIDES := \
     persist.sys.usb.config=mtp,adb
 
 # Tegra 3 spacific overrides
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     persist.tegra.nvmmlite=1 \
     persist.sys.NV_FPSLIMIT=60
 
 # UI
-PRODUCT_PROPERTY_OVERRIDES += \
+#PRODUCT_PROPERTY_OVERRIDES += \
     debug.performance.tuning=1 \
     video.accelerate.hw=1 \
     ro.kernel.android.checkjni=0 \
@@ -192,8 +142,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     com.ti.omap_enhancement=true \
    windowsmgr.max_events_per_sec=300
 
-# Prime spacific overrides
-PRODUCT_PROPERTY_OVERRIDES += \
+# Prime specific overrides
+#PRODUCT_PROPERTY_OVERRIDES += \
     ro.epad.model=TF700T \
     ro.product.model=TF700T
 
@@ -203,13 +153,14 @@ PRODUCT_COPY_FILES += \
     device/asus/tf700t/media_profiles.xml:system/etc/media_profiles.xml
 
 # Inherit tablet dalvik settings
-$(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
+#$(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
 
 # Call the vendor to setup propiatory files
 $(call inherit-product-if-exists, vendor/asus/tf700t/tf700t-vendor.mk)
 
 # Copy bcm4330 firmware
-$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
+# $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 # Device naming
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0

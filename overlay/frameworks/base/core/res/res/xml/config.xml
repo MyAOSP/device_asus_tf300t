@@ -262,5 +262,9 @@
     <string name="config_deviceKeyHandlerLib">/system/framework/com.cyanogenmod.asusdec.jar</string>
     <string name="config_deviceKeyHandlerClass">com.cyanogenmod.asusdec.KeyHandler</string>
 
+ <!-- Maximum wallpaper width for devices with very high-res screen (1920x1200)
+         the wallpaper width suggestion by the launcher may be too large for
+         the GPU to handle. -->
+    <integer name="config_wallpaperMaxWidth">2048</integer>
     <!--<bool name="config_screenOffAnimation">false</bool>-->
 </resources>
