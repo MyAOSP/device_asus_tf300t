@@ -7,7 +7,7 @@ on early-init
 # for backwards compatibility
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
-    mkdir /storage 0050 system sdcard_r
+    mkdir /storage 0550 system sdcard_r
     mkdir /storage/sdcard0 0000 system system
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
@@ -15,8 +15,8 @@ on early-init
     # make the pathes for the external media mounts
     mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard2 0000 system system
-    mkdir /storage/usbdisk 0000 system system
-    symlink /storage/usbdisk /mnt/usbdisk
+    mkdir /storage/usbdisk0 0000 system system
+    mkdir /storage/usbdisk1 0000 system system
 
 on fs
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
@@ -58,10 +58,10 @@ on boot
     chown system system /sys/class/graphics/fb0/device/smartdimmer/enable
     chown system system /sys/class/graphics/fb0/device/smartdimmer/aggressiveness
     chown system system /sys/class/graphics/fb0/device/smartdimmer/phase_in_adjustments
-    chown system system /sys/devices/tegradc.0/smartdimmer/enable
-    chown system system /sys/devices/tegradc.0/smartdimmer/aggressiveness
-    chown system system /sys/devices/tegradc.0/smartdimmer/phase_in_adjustments
-    chown system system /sys/devices/tegradc.0/smartdimmer/bin_width
+#    chown system system /sys/devices/tegradc.0/smartdimmer/enable
+#    chown system system /sys/devices/tegradc.0/smartdimmer/aggressiveness
+#    chown system system /sys/devices/tegradc.0/smartdimmer/phase_in_adjustments
+#    chown system system /sys/devices/tegradc.0/smartdimmer/bin_width
 
 # power
     chown system system /sys/kernel/tegra_cap/core_cap_level
@@ -146,13 +146,12 @@ on boot
 # We dont want to swap keys unless needed
     setprop sys.dockkeys.change 0
 
-on property:ro.debuggable=1
-	
-# Touchscreen Config-UI interface	
-chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/mem_access
-chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable	
-chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
-chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
+on property:ro.debuggable=
+# Touchscreen Config-UI interface
+	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/mem_access
+	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
+	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
+	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
 
 # Fuse
     chmod 444 /sys/firmware/fuse/odm_production_mode
@@ -347,13 +346,16 @@ on property:sys.shutdown.requested=1recovery
 
 # start tf_daemon service
 service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
+    disabled
     class main
     user root
     group shell
+    oneshot
 
-# may restart due to /data/tf not existing yet
-on property:init.svc.tf_daemon=restarting
+# Create data directory and start service
+on property:tf.enable=y
     mkdir /data/tf
+    start tf_daemon
 
 # stop ril-daemon if this is a wifi-only device
 on property:ro.carrier=wifi-only
