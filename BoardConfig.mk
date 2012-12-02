@@ -21,7 +21,7 @@ USE_CAMERA_STUB := false
 #BOARD_USES_TINY_AUDIO_HW := true
 
 # inherit from the proprietary version
--include vendor/asus/tf700t/BoardConfigVendor.mk
+-include vendor/asus/tf300t/BoardConfigVendor.mk
 
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
@@ -43,7 +43,8 @@ TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 ARCH_ARM_HAVE_TLS_REGISTER := true
-
+TARGET_TEGRA_VERSION := t30
+ARCH_ARM_USE_NON_NEON_MEMCPY := true
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
 # Boot/Recovery image settings  
@@ -52,7 +53,7 @@ BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE :=
 
 # EGL settings
-BOARD_EGL_CFG := device/asus/tf700t/prebuilt/egl.cfg
+BOARD_EGL_CFG := device/asus/tf300t/prebuilt/egl.cfg
 USE_OPENGL_RENDERER := true
 
 # Misc display settings
@@ -67,17 +68,16 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 TARGET_HAS_DOCK_BATTERY := true
 
 # Wifi related defines
+BOARD_HOSTAPD_DRIVER        := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER        := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE           := bcmdhd
-
-WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/bcm4330/fw_bcmdhd.bin"
-WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/bcm4330/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/bcm4330/fw_bcmdhd_p2p.bin"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd_34.ko"
+WIFI_DRIVER_MODULE_NAME     := "bcmdhd_34"
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd_34/parameters/firmware_path"
+WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0"
 
 
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -89,18 +89,22 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Try to build the kernel
-#TARGET_KERNEL_SOURCE := kernel/asus/tf700t
-#TARGET_KERNEL_CONFIG := tf700t_bjr_defconfig
+TARGET_KERNEL_SOURCE := kernel/asus/tf300t
+TARGET_KERNEL_CONFIG := tf300t_cm10_defconfig
 
 # Prebuilt Kernel Fallback
-TARGET_PREBUILT_KERNEL := device/asus/tf700t/prebuilt/kernel
+#TARGET_PREBUILT_KERNEL := device/asus/tf300t/prebuilt/kernel
 
 # Custom Tools
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf700t/releasetools/tf700t_ota_from_target_files
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf300t/releasetools/tf300t_ota_from_target_files
 
 # Recovery Options
-BOARD_CUSTOM_BOOTIMG_MK := device/asus/tf700t/recovery/recovery.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/asus/tf300t/recovery/recovery.mk
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_INITRC := device/asus/tf700t/recovery/init.rc
 BOARD_HAS_SDCARD_INTERNAL := true
+
+ifeq ($(HOST_OS),linux)
+#WITH_DEXPREOPT := true
+endif

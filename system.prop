@@ -1,17 +1,15 @@
-#
-# system.prop for tf700t
-#
+ro.opengles.version=131072
+wifi.interface=wlan0
+persist.tegra.nvmmlite=1
 ro.carrier=wifi-only
-ro.sf.lcd_density=240
-ro.epad.model=TF700T
-ro.product.model=TF700T
-ro.epad.model_id=04
-persist.sys.fw.camera.status=1
-tf.enable=y
+ro.epad.model_id=02
+ro.epad.model=TF300T
+ro.product.model=TF300T
+ro.sf.lcd_density=160
 
 # Addidional info for Settings/About/Hardware
-ro.device.cpu=nVidia Tegra 3, Quad-core 1.7 GHz
+ro.device.cpu=nVidia Tegra 3, Quad-core 1.2 GHz
 ro.device.gpu=GeForce 12core GPU
-ro.device.front_cam=2.0MP
+ro.device.front_cam=1.2MP
 ro.device.rear_cam=8MP
-ro.device.screen_res=1920 x 1200 pixels, 10.1 IPS
+ro.device.screen_res=1280 x 800 pixels, 10.1 IPS
