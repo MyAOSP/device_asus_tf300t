@@ -7,7 +7,7 @@ on early-init
 # for backwards compatibility
     export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
-    mkdir /storage 0550 system sdcard_r
+    mkdir /storage 0050 system sdcard_r
     mkdir /storage/sdcard0 0000 system system
     symlink /storage/sdcard0 /sdcard
     symlink /storage/sdcard0 /mnt/sdcard
@@ -19,20 +19,21 @@ on early-init
     mkdir /storage/usbdisk1 0000 system system
 
 on fs
+    mount ext4 /dev/block/mmcblk0p1 /system wait ro
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
     setprop ro.crypto.umount_sd false
-    mount_all /fstab.cardhu
+    mount ext4 /dev/block/mmcblk0p8 /data wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc,errors=panic
+    mount ext4 /dev/block/mmcblk0p2 /cache wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-    mkdir /data/nvcam 0700 media camera
     chown dhcp dhcp /data/misc/dhcp
 
     mkdir /data/misc/wminput 0776 system system
 
-    # we will remap this as /storage/sdcard0 with the sdcard fuse tool
+    # we will remap this as /mnt/sdcard with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
     chown media_rw media_rw /data/media
 
@@ -42,26 +43,41 @@ on post-fs-data
 on boot
 
 # bluetooth
+    # UART device
+    chmod 0660 /dev/ttyHS2
+    chown bluetooth bluetooth /dev/ttyHS2
+
     # power up/down interface
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
 
+    # bluetooth MAC address programming
+    chown bluetooth bluetooth ro.bt.bdaddr_path
+    chown bluetooth bluetooth /system/etc/bluetooth
+    setprop ro.bt.bdaddr_path "/system/etc/bluetooth/bdaddr"
+
+#NFC
+    setprop ro.nfc.port "I2C"
+    chmod 0660 /dev/pn544
+    chown nfc nfc /dev/pn544
+
 # nvdps
-    chown system system /sys/class/graphics/fb0/device/nvdps
+    chown system system /sys/class/graphics/fb0/devics/nvdps
 
 # backlight
     chown system system /sys/class/backlight/pwm-backlight/brightness
 
-# didim
+# didim (old blobs)
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/enable
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/aggressiveness
+    chown system system /sys/devices/nvhost/tegradc.0/smartdimmer/phase_in_adjustments
+
+# didim (new blobs)
     chown system system /sys/class/graphics/fb0/device/smartdimmer/enable
     chown system system /sys/class/graphics/fb0/device/smartdimmer/aggressiveness
     chown system system /sys/class/graphics/fb0/device/smartdimmer/phase_in_adjustments
-#    chown system system /sys/devices/tegradc.0/smartdimmer/enable
-#    chown system system /sys/devices/tegradc.0/smartdimmer/aggressiveness
-#    chown system system /sys/devices/tegradc.0/smartdimmer/phase_in_adjustments
-#    chown system system /sys/devices/tegradc.0/smartdimmer/bin_width
 
 # power
     chown system system /sys/kernel/tegra_cap/core_cap_level
@@ -76,52 +92,31 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/pwr_cap_limit_4
 
 # Sensor
+    chmod 666 /dev/nvhost-ctrl
+    chmod 666 /dev/nvhost-display
+    chmod 666 /dev/nvhost-dsi
+    chmod 666 /dev/nvhost-gr2d
+    chmod 666 /dev/nvhost-gr3d
+    chmod 666 /dev/nvhost-isp
+    chmod 666 /dev/nvhost-mpe
+    chmod 666 /dev/nvhost-vi
     chown system system /sys/bus/iio/devices/device0/als_ir_mode
-    chown system system /sys/bus/iio/devices/device0/als_enable
-    chown system system /sys/bus/iio/devices/device0/als_high_threshold
-    chown system system /sys/bus/iio/devices/device0/als_low_threshold
-
     chown system system /sys/bus/iio/devices/device0/proximity_enable
-    chown system system /sys/bus/iio/devices/device0/proximity_high_threshold
-    chown system system /sys/bus/iio/devices/device0/proximity_low_threshold
-    chown system system /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/enable
-    chown system system /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/delay
-    chmod 777 /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/enable
-    chmod 777 /sys/devices/platform/tegra-i2c.2/i2c-2/2-000f/delay
-
-    # new nodes from linux kernel v3.4
-    chown system system /sys/bus/iio/devices/iio:device0/als_ir_mode
-    chown system system /sys/bus/iio/devices/iio:device0/als_enable
-    chown system system /sys/bus/iio/devices/iio:device0/proximity_enable
-    insmod /system/lib/modules/mpu3050.ko
-    insmod /system/lib/modules/inv_mpu_kxtf9.ko
-    insmod /system/lib/modules/inv_mpu_ak8975.ko
 
 # Power management settings
-    chown system system /sys/module/cpu_tegra3/parameters/no_lp
-    write /sys/module/cpu_tegra3/parameters/no_lp 1
+    write /sys/module/cpu_tegra3/parameters/no_lp 0
     #write /sys/module/tegra3_emc/parameters/emc_enable 0
     #write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 1000000
-
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor conservative
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor conservative
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor conservative
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor conservative
-
-    write /sys/devices/system/cpu/cpufreq/conservative/up_threshold 95
-    write /sys/devices/system/cpu/cpufreq/conservative/down_threshold 75
-    write /sys/devices/system/cpu/cpufreq/conservative/freq_step 3
-
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpufreq/interactive/boost_factor 2
-    write /sys/devices/system/cpu/cpufreq/interactive/input_boost 1
     write /sys/devices/system/cpu/cpufreq/interactive/sustain_load 80
     write /sys/module/cpu_tegra3/parameters/auto_hotplug 1
     #write /sys/module/cpuidle_t3/parameters/lp2_0_in_idle 0
-    write /sys/module/cpuidle/parameters/lp2_in_idle 0
+    write /sys/module/cpuidle/parameters/lp2_in_idle 1
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/min_sample_input_time
 
 # Interactive governor settings
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boost_factor
@@ -135,25 +130,18 @@ on boot
     chown system system /sys/devices/system/cpu/cpufreq/interactive/sustain_load
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/sustain_load
 
-
-# Display Settings
-    write /sys/devices/tegradc.0/smartdimmer/enable 1
-    write /sys/devices/tegradc.0/smartdimmer/bin_width 1
-
 # Setup CPU for "balanced" mode 
     setprop sys.cpu.mode 1
 
 # We dont want to swap keys unless needed
     setprop sys.dockkeys.change 0
 
-on property:ro.debuggable=
 # Touchscreen Config-UI interface
-	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/mem_access
-	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
-	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
-	chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
+   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/debug_enable
+   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/pause_driver
+   chmod 666 /sys/devices/platform/tegra-i2c.1/i2c-1/1-005a/slowscan_enable
 
-# Fuse
+#Fuse
     chmod 444 /sys/firmware/fuse/odm_production_mode
 
 # Default Read Ahead value for sdcards
@@ -164,29 +152,28 @@ on property:ro.debuggable=
     write /data/misc/wminput/connected 0
     chmod 0666 /data/misc/wminput/connected
 
-# GPS
-    mkdir /data/gps
-    chown system system /data/gps
-    chmod 770 /data/gps
-
 # GPS init
     write /sys/class/gpio/export 162
     write /sys/class/gpio/gpio162/value 0
     write /sys/class/gpio/gpio162/direction out
-    chown root system /sys/class/gpio/gpio162/value
+    chown gps system /sys/class/gpio/gpio162/value
     chmod 0664 /sys/class/gpio/gpio162/value
+    mkdir /data/gps
+    chown gps system /data/gps
+    chmod 770 /data/gps
+    chown gps system /dev/ttyHS1
+    chmod 0660 /dev/ttyHS1
+    chown system system /sys/module/cpu_tegra/parameters/gps_start
+    chmod 600 /sys/module/cpu_tegra/parameters/gps_start
 
 # NTFS and exFAT support
-    insmod /system/lib/tntfs.ko
-    insmod /system/lib/texfat.ko
-
-# insmod cfg80211.ko for cfg80211 and P2P mode.
-#    insmod /system/lib/modules/cfg80211.ko
+    insmod /sbin/tntfs.ko
+    insmod /sbin/texfat.ko
+    insmod /system/lib/modules/cfg80211.ko
 
 # Touch
     start touch_update
     chown system system /proc/ektf_dbg
-    chmod 0660 /proc/ektf_dbg
 
 # BB mapping symbolic name to the logging ttyACM port
     symlink /dev/ttyACM2 /dev/log_modem
@@ -230,7 +217,7 @@ service wpa_supplicant2 /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service dhcpcd_wlan0 /system/bin/dhcpcd -aABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
     class main
     disabled
     oneshot
@@ -244,16 +231,6 @@ service dhcpcd_eth0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
      class main
      disabled
      oneshot
-
-service dhcpcd_rmnet0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
-    class main
-    disabled
-    oneshot
-
-service dhcpcd_rmnet1 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
-    class main
-    disabled
-    oneshot
 
 service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
     class main
@@ -271,21 +248,10 @@ service iprenew_p2p /system/bin/dhcpcd -n
     oneshot
 
 service iprenew_eth0 /system/bin/dhcpcd -n
-    class main
     disabled
     oneshot
 
 service iprenew_bnep0 /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot
-
-service iprenew_rmnet0 /system/bin/dhcpcd -n
-    class main
-    disabled
-    oneshot
-
-service iprenew_rmnet1 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
@@ -295,13 +261,14 @@ service iprenew_rmnet1 /system/bin/dhcpcd -n
     class main
     user root
     oneshot
-# Sensor load calibration files end
+#Sensor load calibration files end
 
-# create virtual SD card at /storage/sdcard0, based on the /data/media directory
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # deamon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media wil be created with user and group media_rw (1023)
 service sdcard /system/bin/sdcard /data/media 1023 1023
-    class late_start
+    class main
+    oneshot
 
 # bugreport is triggered by the VOLUME-DOWN and VOLUME-UP keys
 service bugreport /system/bin/dumpstate -d -v -o /data/storage/bugreports/bugreport
@@ -310,12 +277,14 @@ service bugreport /system/bin/dumpstate -d -v -o /data/storage/bugreports/bugrep
     oneshot
     keycodes 115 114
 
-# BCM hciattach - bt firmware loader
-service hciattach /system/bin/bt_firmware_loader.sh
+#BCM
+service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0,0,0,0,0,0 \
+    --baudrate 3000000 --patchram /etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd --enable_lpm /dev/ttyHS2
     class main
     user root
     group system bluetooth net_bt_admin misc
     disabled
+
 
 # Start GPS daemon
   on boot
@@ -324,6 +293,7 @@ service hciattach /system/bin/bt_firmware_loader.sh
   socket gps seqpacket 0666 root root
   group root
   class late_start
+
 
 # Mount usb drives as /usbdrive. Generally usb drives are formatted with FAT
 # filesystem, so we support FAT as of now.
@@ -334,7 +304,7 @@ service hciattach /system/bin/bt_firmware_loader.sh
 #  umount /mnt/usbdrive
 
 # configure MSC partition
-service mischelp /system/bin/mischelp /dev/block/platform/sdhci-tegra.3/by-name/MC boot-recovery
+service mischelp /system/bin/mischelp /dev/block/mmcblk0p3 boot-recovery
     disabled
     class main
     user root
@@ -344,18 +314,16 @@ service mischelp /system/bin/mischelp /dev/block/platform/sdhci-tegra.3/by-name/
 on property:sys.shutdown.requested=1recovery
     start mischelp
 
-# start tf_daemon service
+#Prepare TF service
 service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
-    disabled
     class main
     user root
     group shell
-    oneshot
 
-# Create data directory and start service
-on property:tf.enable=y
+# may restart due to /data/tf not existing yet
+on property:init.svc.tf_daemon=restarting
     mkdir /data/tf
-    start tf_daemon
+
 
 # stop ril-daemon if this is a wifi-only device
 on property:ro.carrier=wifi-only
@@ -377,6 +345,9 @@ service ps3service /system/bin/ps3service
     group root
     disabled
     oneshot
+
+#on property:wifi.module.type=1
+#    insmod /system/lib/modules/bcm4329.ko
 
 on property:dev.bootcomplete=1
     chown system system /sys/devices/platform/tegra_grhost/enable_3d_scaling
@@ -409,29 +380,22 @@ on property:ril.testmode=0
 # End of testmode patches.
 
 # insmod bcmdhd driver for BCM4330/BCM4334
-#on property:wifi.module.type=0
-#    insmod /system/lib/modules/bcmdhd.ko
+on property:wifi.module.type=0
+    insmod /system/lib/modules/bcmdhd.ko
 
-#on property:wifi.module.type=2
-#    insmod /system/lib/modules/bcmdhd.ko
+on property:wifi.module.type=2
+    insmod /system/lib/modules/bcmdhd.ko
 
-#on property:wifi.module.type=4
-#    insmod /system/lib/modules/bcmdhd.ko
+on property:wifi.module.type=4
+    insmod /system/lib/modules/bcmdhd.ko
 
-#on property:wifi.module.type=5
-#    insmod /system/lib/modules/bcmdhd_34.ko
+on property:wifi.module.type=5
+    insmod /system/lib/modules/bcmdhd_34.ko
 
-#on property:wifi.module.type=6
-#    insmod /system/lib/modules/bcmdhd_34.ko
+on property:wifi.module.type=6
+    insmod /system/lib/modules/bcmdhd_34.ko
 
-# Blutooth DUN support
-service BtService /system/bin/sh /system/etc/BtService.sh
-    user root
-    group root
-    disabled
-    oneshot
-
-# Touch
+#Touch
 service touch_update /system/bin/touch_fw_update --default
     user system
     group system
