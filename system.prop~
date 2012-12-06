@@ -1,0 +1,5 @@
+ro.opengles.version=131072
+wifi.interface=wlan0
+persist.tegra.nvmmlite=1
+ro.carrier=wifi-only
+ro.epad.model_id=02
