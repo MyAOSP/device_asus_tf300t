@@ -1,0 +1,29 @@
+# init.mods.rc
+
+service initd /system/xbin/busybox run-parts /system/etc/init.d/
+    class main
+    user root
+    group root
+    oneshot
+
+service data2sd /system/bin/sh /sbin/data2sd.sh
+    user root
+    group root
+    oneshot
+
+on property:init.svc.data2sd=stopped
+    trigger post-fs-data
+    load_persist_props
+    start wifimacwriter
+    start sensors-config
+
+on early-boot
+    start data2sd
+
+on post-fs-data
+    mkdir /data/gps
+    chown system system /data/gps
+    chmod 770 /data/gps
+    mkdir /data/modem
+    chmod 0770 /data/modem
+    chown radio system /data/modem
