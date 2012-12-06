@@ -14,11 +14,7 @@
 # limitations under the License.
 #
 
-USE_PROPRIETARY_AUDIO_EXTENSIONS := true
-BOARD_USES_GENERIC_AUDIO := false
 USE_CAMERA_STUB := false
-#BOARD_USES_ALSA_AUDIO := false
-#BOARD_USES_TINY_AUDIO_HW := true
 
 # inherit from the proprietary version
 -include vendor/asus/tf300t/BoardConfigVendor.mk
@@ -90,7 +86,7 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Try to build the kernel
 TARGET_KERNEL_SOURCE := kernel/asus/tf300t
-TARGET_KERNEL_CONFIG := tf300t_cm10_defconfig
+TARGET_KERNEL_CONFIG := untermensch_defconfig
 
 # Prebuilt Kernel Fallback
 #TARGET_PREBUILT_KERNEL := device/asus/tf300t/prebuilt/kernel

@@ -19,11 +19,12 @@ on early-init
     mkdir /storage/usbdisk1 0000 system system
 
 on fs
-    mount ext4 /dev/block/mmcblk0p1 /system wait ro
     setprop ro.crypto.tmpfs_options size=128m,mode=0771,uid=1000,gid=1000
     setprop ro.crypto.umount_sd false
-    mount ext4 /dev/block/mmcblk0p8 /data wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc,errors=panic
-    mount ext4 /dev/block/mmcblk0p2 /cache wait noatime nosuid nodev journal_async_commit,data=writeback,nodelalloc
+#    mount ext4 /dev/block/mmcblk0p1 /system wait ro
+#    mount ext4 /dev/block/mmcblk0p8 /data wait noatime nosuid nodev journal_async_commit data=writeback nodelalloc errors=panic
+#    mount ext4 /dev/block/mmcblk0p2 /cache wait noatime nosuid nodev journal_async_commit data=writeback nodelalloc
+    mount_all /fstab.cardhu
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -130,7 +131,7 @@ on boot
     chown system system /sys/devices/system/cpu/cpufreq/interactive/sustain_load
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/sustain_load
 
-# Setup CPU for "balanced" mode 
+# Setup CPU for "balanced" mode
     setprop sys.cpu.mode 1
 
 # We dont want to swap keys unless needed
@@ -285,7 +286,6 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
     group system bluetooth net_bt_admin misc
     disabled
 
-
 # Start GPS daemon
   on boot
   service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
@@ -293,7 +293,6 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
   socket gps seqpacket 0666 root root
   group root
   class late_start
-
 
 # Mount usb drives as /usbdrive. Generally usb drives are formatted with FAT
 # filesystem, so we support FAT as of now.

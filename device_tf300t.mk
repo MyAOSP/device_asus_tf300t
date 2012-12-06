@@ -37,11 +37,20 @@ endif
 # Files needed for boot image
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
+    $(LOCAL_PATH)/ramdisk/init:root/init \
     $(LOCAL_PATH)/ramdisk/init.cardhu.rc:root/init.cardhu.rc \
-    $(LOCAL_PATH)/ramdisk/ueventd.cardhu.rc:root/ueventd.cardhu.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.usb.rc:root/init.cardhu.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.cpu.rc:root/init.cardhu.cpu.rc \
-    $(LOCAL_PATH)/prebuilt/fstab.cardhu:root/fstab.cardhu \
+    $(LOCAL_PATH)/ramdisk/fstab.cardhu:root/fstab.cardhu \
+    $(LOCAL_PATH)/ramdisk/init.cm.rc:root/init.cm.rc \
+    $(LOCAL_PATH)/ramdisk/init.goldfish.rc:root/init.goldfish.rc \
+    $(LOCAL_PATH)/ramdisk/init.mods.rc:root/init.mods.rc \
+    $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
+    $(LOCAL_PATH)/ramdisk/init.trace.rc:root/init.trace.rc \
+    $(LOCAL_PATH)/ramdisk/init.usb.rc:root/init.usb.rc \
+    $(LOCAL_PATH)/ramdisk/ueventd.cardhu.rc:root/ueventd.cardhu.rc \
+    $(LOCAL_PATH)/ramdisk/ueventd.goldfish.rc:root/ueventd.goldfish.rc \
+    $(LOCAL_PATH)/ramdisk/ueventd.rc:root/ueventd.rc
 
 # Kernel modules
 PRODUCT_COPY_FILES += \
@@ -159,8 +168,8 @@ PRODUCT_COPY_FILES += \
 
 # media codec config xml file
 PRODUCT_COPY_FILES += \
-    device/asus/tf300t/prebuilt/media_codecs.xml:system/etc/media_codecs.xml \
-    device/asus/tf300t/prebuilt/media_profiles.xml:system/etc/media_profiles.xml
+    device/asus/tf300t/media_codecs.xml:system/etc/media_codecs.xml \
+    device/asus/tf300t/media_profiles.xml:system/etc/media_profiles.xml
 
 # Inherit tablet dalvik settings
 #$(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
