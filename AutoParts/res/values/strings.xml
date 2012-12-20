@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Asus Transformer Infinity Settings</string>
+    <string name="app_name">Asus Transformer Pad Settings</string>
 
     <!--preferences -->
     <string name="cpu_settings_title">CPU Settings</string>
