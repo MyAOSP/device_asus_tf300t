@@ -400,7 +400,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   #  ts = GetBuildProp("ro.build.date.utc", input_zip)
   #  script.AssertOlderBuild(ts)
 
-  if not Options.no_assert:
+  if not OPTIONS.no_assert:
       # AppendAssertions(script, input_zip)
         device_specific.FullOTA_Assertions()
 
@@ -793,7 +793,7 @@ def main(argv):
       OPTIONS.modelidcfg = bool(a.lower() == 'true')
     elif o in ("--override_device"):
       OPTIONS.override_device = a
-    elif o in ("--no_assert")
+    elif o in ("--no_assert"):
       if a in ("on", "On", "true", "True", "yes", "Yes"):
           OPTIONS.no_assert = True
       else:
