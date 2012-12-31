@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-BOARD_USES_GENERIC_AUDIO := false
 USE_CAMERA_STUB := false
 
 # inherit from the proprietary version
@@ -22,10 +21,14 @@ USE_CAMERA_STUB := false
 
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-# Board nameing
+# Board naming
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := tegra
 TARGET_BOOTLOADER_BOARD_NAME := cardhu
+
+#ICS Camera HAL
+#COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB -DICS_AUDIO_BLOB
+#COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
 
 # Audio blobs
 COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB
@@ -39,11 +42,12 @@ TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 ARCH_ARM_HAVE_TLS_REGISTER := true
-
+TARGET_TEGRA_VERSION := t30
+ARCH_ARM_USE_NON_NEON_MEMCPY := true
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
 # Boot/Recovery image settings  
-BOARD_KERNEL_CMDLINE := 
+BOARD_KERNEL_CMDLINE :=
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE :=
 
@@ -60,21 +64,23 @@ BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUEDROID_VENDOR_CONF := device/asus/tf300t/bluetooth/vnd_tf300t.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/asus/tf300t/bluetooth
 
 # Support for dock battery
 TARGET_HAS_DOCK_BATTERY := true
 
 # Wifi related defines
+BOARD_HOSTAPD_DRIVER        := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER        := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE           := bcmdhd
-WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/fw_bcmdhd.bin"
-WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_P2P     := "/system/vendor/firmware/fw_bcmdhd_p2p.bin"
+WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd_34.ko"
+WIFI_DRIVER_MODULE_NAME     := "bcmdhd_34"
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd_34/parameters/firmware_path"
+WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0"
+
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
@@ -86,10 +92,10 @@ TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Try to build the kernel
 TARGET_KERNEL_SOURCE := kernel/asus/tf300t
-TARGET_KERNEL_CONFIG := tf300t_cm10_defconfig
+TARGET_KERNEL_CONFIG := untermensch_defconfig
 
 # Prebuilt Kernel Fallback
-#TARGET_PREBUILT_KERNEL := device/asus/tf300t/kernel
+#TARGET_PREBUILT_KERNEL := device/asus/tf300t/prebuilt/kernel
 
 # Custom Tools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf300t/releasetools/tf300t_ota_from_target_files
@@ -98,5 +104,9 @@ TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf300t/releasetools/tf3
 BOARD_CUSTOM_BOOTIMG_MK := device/asus/tf300t/recovery/recovery.mk
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_LARGE_FILESYSTEM := true
-TARGET_RECOVERY_INITRC := device/asus/tf300t/recovery/init.rc
+TARGET_RECOVERY_INITRC := device/asus/tf700t/recovery/init.rc
 BOARD_HAS_SDCARD_INTERNAL := true
+
+ifeq ($(HOST_OS),linux)
+#WITH_DEXPREOPT := true
+endif
