@@ -1,0 +1,11 @@
+diff -uNr a/linker.c b/linker.c
+--- a/linker.c	2012-11-11 11:17:15.513966627 -0800
++++ b/linker.c	2012-11-11 12:16:11.490040003 -0800
+@@ -594,6 +594,7 @@
+ static const char *sopaths[] = {
+     "/vendor/lib",
+     "/system/lib",
++    "/system/lib/mpu3050",
+     0
+ };
+ 
