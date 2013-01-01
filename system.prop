@@ -6,6 +6,8 @@ ro.epad.model_id=02
 ro.epad.model=TF300T
 ro.product.model=TF300T
 ro.sf.lcd_density=160
+persist.sys.fw.camera.status=1
+tf.enable=y
 
 # Addidional info for Settings/About/Hardware
 ro.device.cpu=nVidia Tegra 3, Quad-core 1.2 GHz

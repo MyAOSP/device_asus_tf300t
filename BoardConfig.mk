@@ -42,8 +42,7 @@ TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 ARCH_ARM_HAVE_TLS_REGISTER := true
-TARGET_TEGRA_VERSION := t30
-ARCH_ARM_USE_NON_NEON_MEMCPY := true
+
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
 # Boot/Recovery image settings  
@@ -91,11 +90,11 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Try to build the kernel
-TARGET_KERNEL_SOURCE := kernel/asus/tf300t
-TARGET_KERNEL_CONFIG := untermensch_defconfig
+#TARGET_KERNEL_SOURCE := kernel/asus/tf300t
+#TARGET_KERNEL_CONFIG := untermensch_defconfig
 
 # Prebuilt Kernel Fallback
-#TARGET_PREBUILT_KERNEL := device/asus/tf300t/prebuilt/kernel
+TARGET_PREBUILT_KERNEL := device/asus/tf300t/kernel
 
 # Custom Tools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf300t/releasetools/tf300t_ota_from_target_files
@@ -107,6 +106,3 @@ BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_INITRC := device/asus/tf700t/recovery/init.rc
 BOARD_HAS_SDCARD_INTERNAL := true
 
-ifeq ($(HOST_OS),linux)
-#WITH_DEXPREOPT := true
-endif

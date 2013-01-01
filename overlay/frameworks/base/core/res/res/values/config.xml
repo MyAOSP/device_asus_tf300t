@@ -225,4 +225,7 @@ This must be overridden in platform specific overlays -->
 
     <bool name="config_showNavigationBar">true</bool>
     <integer name="config_multiuserMaximumUsers">8</integer>
+
+<!-- We now need to use a constant bool as reference for whether or not this is a hybrid ui device, i.e. grouper. -->
+    <!--<bool name="config_isHybridUiDevice">true</bool>-->
 </resources>

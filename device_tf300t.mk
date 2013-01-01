@@ -21,21 +21,16 @@ $(call inherit-product-if-exists, vendor/asus/tf300t/tf300t-vendor.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/asus/tf300t/overlay
 
-
-# Build characteristics setting
-PRODUCT_CHARACTERISTICS := tablet
-PRODUCT_AAPT_CONFIG := normal large xlarge mdpi
-PRODUCT_AAPT_PREF_CONFIG := xlarge mdpi
-
 # Prebuilt kernel location
-#ifeq ($(TARGET_PREBUILT_KERNEL),)
-#        LOCAL_KERNEL := device/asus/tf300t/prebuilt/kernel
-#else
-#        LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-#endif
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+        LOCAL_KERNEL := device/asus/tf300t/kernel
+else
+        LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
 
 # Files needed for boot image
 PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel \
     $(LOCAL_PATH)/ramdisk/init.cardhu.rc:root/init.cardhu.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.cardhu.rc:root/ueventd.cardhu.rc \
     $(LOCAL_PATH)/ramdisk/init.cardhu.usb.rc:root/init.cardhu.usb.rc \
@@ -48,8 +43,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/lib/baseband-xmm-power2.ko:system/lib/modules/baseband-xmm-power2.ko \
     $(LOCAL_PATH)/prebuilt/lib/raw_ip_net.ko:system/lib/modules/raw_ip_net.ko \
     $(LOCAL_PATH)/prebuilt/lib/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
-    $(LOCAL_PATH)/prebuilt/lib/tcrypt.ko:system/lib/modules/tcrypt.ko
-
+    $(LOCAL_PATH)/prebuilt/lib/tcrypt.ko:system/lib/modules/tcrypt.ko \
+    $(LOCAL_PATH)/prebuilt/lib/bcm4329.ko:system/lib/modules/bcm4329.ko \
+    $(LOCAL_PATH)/prebuilt/lib/bcmdhd.ko:system/lib/modules/bcmdhd.ko \
+    $(LOCAL_PATH)/prebuilt/lib/bcmdhd_29.ko:system/lib/modules/bcmdhd_29.ko \
+    $(LOCAL_PATH)/prebuilt/lib/bcmdhd_34.ko:system/lib/modules/bcmdhd_34.ko \
+    $(LOCAL_PATH)/prebuilt/lib/brcmfmac.ko:system/lib/modules/brcmfmac.ko \
+    $(LOCAL_PATH)/prebuilt/lib/cfg80211.ko:system/lib/modules/cfg80211.ko
 
 # Prebuilt configuration files
 PRODUCT_COPY_FILES += \
@@ -74,6 +74,12 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/asusdec.kl:system/usr/keylayout/asusdec.kl \
     $(LOCAL_PATH)/prebuilt/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(LOCAL_PATH)/prebuilt/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl
+
+
+# Build characteristics setting
+PRODUCT_CHARACTERISTICS := tablet
+PRODUCT_AAPT_CONFIG := normal large xlarge mdpi
+PRODUCT_AAPT_PREF_CONFIG := large mdpi
 
 # Camera/WiFi/BT Firmware
 PRODUCT_COPY_FILES += \
@@ -106,10 +112,6 @@ PRODUCT_COPY_FILES += \
 # This device have enough room for precise davick
 PRODUCT_TAGS += dalvik.gc.type-precise
 
-# torch app
-PRODUCT_PACKAGES += \
-	Torch
-
 # Extra packages to build for this device
 PRODUCT_PACKAGES += \
     librs_jni \
@@ -125,33 +127,17 @@ PRODUCT_PACKAGES += \
     blobpack_tfp \
     mischelp \
     wifimacwriter \
-    libstagefrighthw 
+    libstagefrighthw
 
 # Propertys spacific for this device
 PRODUCT_PROPERTY_OVERRIDES := \
     wifi.supplicant_scan_interval=15 \
-    persist.sys.usb.config=mtp,adb \
-    ro.epad.model=TF300T \
-    ro.sf.lcd_density=160 \
-    tf.enable=y \
+    persist.sys.usb.config=mtp,adb 
 
 # Tegra 3 spacific overrides
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.tegra.nvmmlite=1 \
     persist.sys.NV_FPSLIMIT=60
-
-# UI
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.performance.tuning=1 \
-    video.accelerate.hw=1 \
-    ro.kernel.android.checkjni=0 \
-    ro.kernel.checkjni=0 \
-    ro.mot.eri.losalert.delay=1000 \
-    persist.sys.strictmode.visual=0 \
-    persist.sys.strictmode.disable=1 \
-    dalvik.vm.execution-mode=int:jit \
-    com.ti.omap_enhancement=true \
-    windowsmgr.max_events_per_sec=300
 
 # Prime specific overrides
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -169,7 +155,7 @@ PRODUCT_COPY_FILES += \
 
 # Inherit tablet dalvik settings
 $(call inherit-product, frameworks/native/build/tablet-dalvik-heap.mk)
-$(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
+
 
 # Call the vendor to setup propiatory files
 $(call inherit-product-if-exists, vendor/asus/tf300t/tf300t-vendor.mk)
