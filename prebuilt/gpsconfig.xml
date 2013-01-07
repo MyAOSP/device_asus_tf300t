@@ -20,7 +20,7 @@
     LogFacMask="LOG_GLLAPI | LOG_NMEA | LOG_RAWDATA"
     FrqPlan="FRQ_PLAN_26MHZ_2PPM"
     RfType="GL_RF_47511_BRCM_EXT_LNA"
-    PeriodicTimeOutSec="40"
+    PeriodicTimeOutSec="5"
 />
 
 <!-- GPS configuration for with 16.8 MHz TCXO
