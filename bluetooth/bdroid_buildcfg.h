@@ -17,7 +17,7 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#define BTM_DEF_LOCAL_NAME "Asus TF300t"
+#define BTM_DEF_LOCAL_NAME "TF300T"
 
 // Networking, Capturing, Object Transfer
 // MAJOR CLASS: COMPUTER
@@ -26,6 +26,6 @@
 
 #define BTIF_HF_SERVICES (BTA_HSP_SERVICE_MASK)
 #define BTIF_HF_SERVICE_NAMES  { BTIF_HSAG_SERVICE_NAME }
-#define PAN_NAP_DISABLED FALSE
+#define PAN_NAP_DISABLED TRUE
 
 #endif
