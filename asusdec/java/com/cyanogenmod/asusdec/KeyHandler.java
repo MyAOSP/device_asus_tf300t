@@ -234,13 +234,6 @@ public final class KeyHandler implements DeviceKeyHandler {
             mPowerManager = IPowerManager.Stub.asInterface(
                     ServiceManager.getService("power"));
         }
-        try {
-            mPowerManager.setBacklightBrightness(value);
-        } catch (RemoteException ex) {
-            Slog.e(TAG, "Could not set backlight brightness", ex);
-        }
-        Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.SCREEN_BRIGHTNESS, value);
     }
 
     private int getBrightness(int def) {

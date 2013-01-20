@@ -5,7 +5,6 @@ on early-init
     mount debugfs debugfs /sys/kernel/debug
 
 on init
-# for backwards compatibility
     # for backwards compatibility
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
@@ -22,7 +21,7 @@ on init
 
     # Enable secondary storage
     export SECONDARY_STORAGE /storage/sdcard1
-
+ 
     # make the pathes for the external media mounts
     mkdir /storage/sdcard1 0000 system system
     mkdir /storage/sdcard2 0000 system system
@@ -296,9 +295,8 @@ service bugreport /system/bin/dumpstate -d -v -o /data/storage/bugreports/bugrep
     oneshot
     keycodes 115 114
 
-#BCM
-service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0,0,0,0,0,0 \
-    --baudrate 3000000 --patchram /etc/firmware/BCM4329B1_002.002.023.0797.0863.hcd --enable_lpm /dev/ttyHS2
+# BCM hciattach - bt firmware loader
+service hciattach /system/bin/bt_firmware_loader.sh
     class main
     user root
     group system bluetooth net_bt_admin misc

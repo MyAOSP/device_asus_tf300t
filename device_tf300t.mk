@@ -129,7 +129,9 @@ PRODUCT_PACKAGES += \
     blobpack_tfp \
     mischelp \
     wifimacwriter \
-    libstagefrighthw
+    libstagefrighthw \
+    com.cyanogenmod.asusdec \
+    libasusdec_jni
 
 # Propertys spacific for this device
 PRODUCT_PROPERTY_OVERRIDES := \
