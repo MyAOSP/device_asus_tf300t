@@ -1,44 +1,83 @@
+#include <JNIHelp.h>
+#include <android_runtime/AndroidRuntime.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+
+#define ASUSDEC_DEV "/dev/asusdec"
+
+// copied from drivers/input/asusec/asusdec.h
+#define ASUSDEC_TP_ON   1
+#define ASUSDEC_TP_OFF  0
+#define ASUSDEC_IOC_MAGIC   0xf4
+#define ASUSDEC_TP_CONTROL      _IOR(ASUSDEC_IOC_MAGIC, 5,  int)
+
+
+
+// ----------------------------------------------------------------------------
+
 /*
- * Copyright (C) 2013 The CyanogenMod Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Class:     com_cyanogenmod_asusdec_KeyHandler
+ * Method:    nativeToggleTouchpad
+ * Signature: (Z)Z
  */
+JNIEXPORT jboolean JNICALL Java_com_cyanogenmod_asusdec_KeyHandler_nativeToggleTouchpad
+  (JNIEnv *env, jclass cls, jboolean status) {
+    ALOGD("Switching touchpad %d\n", status);
 
-#include "JNIHelp.h"
-#include "jni.h"
-#include "utils/Log.h"
-#include "utils/misc.h"
+    int fd = open(ASUSDEC_DEV, O_RDONLY | O_NONBLOCK);
 
-namespace asusdec {
-int register_asusdec_KeyHandler(JNIEnv* env);
-int register_asusdec_DockBatteryHandler(JNIEnv* env);
+    if (fd < 0) {
+        ALOGE("Could  open device %s\n", ASUSDEC_DEV);
+        return -1;
+    }
+
+    int on = (status == 0) ? ASUSDEC_TP_OFF : ASUSDEC_TP_ON;
+    int success = ioctl(fd, ASUSDEC_TP_CONTROL, on);
+
+    if (success != 0) {
+        ALOGE("Error calling ioctl, %d\n", success);
+    }
+
+    close(fd);
+
+    ALOGD("Touchpad is %d\n", on);
+    return (jboolean) ((on == 1) ? true : false);
+}
+
+
+// ----------------------------------------------------------------------------
+
+static const JNINativeMethod gMethods[] = {
+        { "nativeToggleTouchpad", "(Z)Z", (void *) Java_com_cyanogenmod_asusdec_KeyHandler_nativeToggleTouchpad }
 };
 
-using namespace asusdec;
 
-extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved)
-{
+// ----------------------------------------------------------------------------
+
+/*
+ * This is called by the VM when the shared library is first loaded.
+ */
+jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     JNIEnv* env = NULL;
     jint result = -1;
 
     if (vm->GetEnv((void**) &env, JNI_VERSION_1_4) != JNI_OK) {
-        ALOGE("GetEnv failed!");
-        return result;
+        ALOGE("ERROR: GetEnv failed\n");
+        goto bail;
     }
-    ALOG_ASSERT(env, "Could not retrieve the env!");
+    assert(env != NULL);
 
-    register_asusdec_KeyHandler(env);
-    register_asusdec_DockBatteryHandler(env);
+    if(android::AndroidRuntime::registerNativeMethods(
+            env, "com/cyanogenmod/asusdec/KeyHandler", gMethods,
+            sizeof(gMethods) / sizeof(gMethods[0])) != JNI_OK) {
+        ALOGE("Failed to register native methods");
+        goto bail;
+    }
 
-    return JNI_VERSION_1_4;
+    /* success -- return valid version number */
+    result = JNI_VERSION_1_4;
+
+bail:
+    return result;
 }

@@ -123,7 +123,6 @@ PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
     libtinyalsa \
-    tinymix \
     libaudioutils \
     libinvensense_mpl \
     AutoParts_tfp \

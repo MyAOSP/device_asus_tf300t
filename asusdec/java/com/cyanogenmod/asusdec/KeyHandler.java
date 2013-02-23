@@ -44,7 +44,7 @@ import com.android.internal.os.DeviceKeyHandler;
 public final class KeyHandler implements DeviceKeyHandler {
     private static final String TAG = "AsusdecKeyHandler";
 
-    private static final boolean DEBUG_KEYEVENT = false;
+    private static final boolean DEBUG_KEYEVENT = true;
 
     private static final int MINIMUM_BACKLIGHT = android.os.PowerManager.BRIGHTNESS_OFF + 1;
     private static final int MAXIMUM_BACKLIGHT = android.os.PowerManager.BRIGHTNESS_ON;
@@ -72,7 +72,7 @@ public final class KeyHandler implements DeviceKeyHandler {
     private IPowerManager mPowerManager;
 
     static {
-        AsusdecNative.loadAsusdecLib();
+        System.loadLibrary("asusdec_jni");
     }
 
     public KeyHandler(Context context) {
@@ -148,7 +148,7 @@ public final class KeyHandler implements DeviceKeyHandler {
                 brightnessUp();
                 break;
             case SCANCODE_BRIGHTNESS_AUTO:
-                toggleAutoBrightness();
+                brightnessAuto();
                 break;
             case SCANCODE_SCREENSHOT:
                 takeScreenshot();
@@ -252,19 +252,11 @@ public final class KeyHandler implements DeviceKeyHandler {
         setBrightness(value);
     }
 
-    private void toggleAutoBrightness() {
+    private void brightnessAuto() {
         if (!mAutomaticAvailable) {
             return;
         }
-        int currentValue =
-                Settings.System.getInt(
-                    mContext.getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS_MODE,
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-        setBrightnessMode(
-                currentValue == Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL ?
-                Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC :
-                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+        setBrightnessMode(Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
     }
 
     private void setBrightnessMode(int mode) {
