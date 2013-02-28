@@ -86,11 +86,11 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Try to build the kernel
-TARGET_KERNEL_SOURCE := kernel/asus/tf300t
-TARGET_KERNEL_CONFIG := drgravy_defconfig
+#TARGET_KERNEL_SOURCE := kernel/asus/tf300t
+#TARGET_KERNEL_CONFIG := drgravy_defconfig
 
 # Prebuilt Kernel Fallback
-#TARGET_PREBUILT_KERNEL := device/asus/tf300t/kernel
+TARGET_PREBUILT_KERNEL := device/asus/tf300t/kernel
 
 # Custom Tools
 TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/asus/tf300t/releasetools/tf300t_ota_from_target_files
