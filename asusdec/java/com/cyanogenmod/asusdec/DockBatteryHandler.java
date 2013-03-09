@@ -87,6 +87,8 @@ public final class DockBatteryHandler implements DeviceDockBatteryHandler {
         // Common data
         bundle.putInt(BatteryManager.EXTRA_DOCK_STATUS, this.mDockBatteryStatus);
         bundle.putInt(BatteryManager.EXTRA_DOCK_LEVEL, this.mDockBatteryLevel);
+        bundle.putBoolean(BatteryManager.EXTRA_DOCK_PRESENT, this.mDockBatteryPresent);
+        bundle.putInt(BatteryManager.EXTRA_DOCK_PLUGGED, this.mDockBatteryPlugged);
 
         // EEPAD data
         bundle.putBoolean("usb_wakeup", this.mPadUsbOnline);
