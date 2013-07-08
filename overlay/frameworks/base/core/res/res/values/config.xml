@@ -157,8 +157,6 @@
     <string name="config_deviceDockBatteryHandlerClass" translatable="false">com.cyanogenmod.asusdec.DockBatteryHandler</string>
     <string name="config_deviceKeyHandlerClass" translatable="false">com.cyanogenmod.asusdec.KeyHandler</string>
 
-   <!-- <bool name="config_screenOffAnimation">false</bool> -->
-
    <bool name="config_showNavigationBar">true</bool>
    <integer name="config_multiuserMaximumUsers">8</integer>
 
